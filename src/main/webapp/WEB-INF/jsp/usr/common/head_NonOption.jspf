@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
-<html data-theme="light">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
@@ -20,8 +20,29 @@
 <!-- 테일윈드 치트시트 : https://nerdcave.com/tailwind-cheat-sheet -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 
+<!-- vanta.js 적용 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.waves.min.js"></script>
+
+<script>
+	VANTA.WAVES({
+		el : "#background",
+		mouseControls : true,
+		touchControls : true,
+		gyroControls : false,
+		minHeight : 200.00,
+		minWidth : 200.00,
+		scale : 1.00,
+		scaleMobile : 1.00,
+		color : 0x1d549b
+	})
+</script>
+
 </head>
+
+
 <body>
+
 	<header class="bg-white">
 		<div class="flex h-20 mx-auto items-center text-3xl">
 			<a href="/">
