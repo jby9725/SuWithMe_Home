@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${board.code } LIST"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
-<hr />
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
