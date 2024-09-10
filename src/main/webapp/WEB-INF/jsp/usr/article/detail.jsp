@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="DETAIL"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 
-<hr />
 
 <!-- <iframe src="http://localhost:8080/usr/article/doIncreaseHitCount?id=757" frameborder="0"></iframe> -->
 <!-- 변수 -->

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="MODIFY"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
-<%-- <%@ include file="../common/toastUiEditorLib.jspf"%> --%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 
 
 <script type="text/javascript">
