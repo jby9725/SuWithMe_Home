@@ -15,5 +15,13 @@ public class UsrHomeController {
 	public String showMain() {
 		return "/usr/home/main";
 	}
+	
+	
+	@RequestMapping("/usr/crawl")
+	public String doCrawl() {
 
+//		crawlTest.crawl();
+
+		return "redirect:/usr/home/main";
+	}
 }

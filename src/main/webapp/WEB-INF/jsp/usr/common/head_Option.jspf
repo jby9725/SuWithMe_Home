@@ -29,16 +29,23 @@
 			</a>
 			<div class="flex-grow"></div>
 			<ul class="flex">
-				
-				<!-- 여기서 로그인 했는지 안했는지에 따라 로그인/회원가입인지 로그아웃/마이페이지인지 구별 필요함. -->
-				
-				<li>
-					<a class="" href="../member/logout">로그아웃</a>
-				</li>
-				<li>
-					<a class="" href="../member/myPage">마이페이지</a>
-				</li>
-				
+
+				<c:if test="${!rq.isLogined() }">
+					<li>
+						<a class="hover:underline" href="../member/login">LOGIN</a>
+					</li>
+					<li>
+						<a class="hover:underline" href="../member/join">JOIN</a>
+					</li>
+				</c:if>
+				<c:if test="${rq.isLogined() }">
+					<li>
+						<a class="hover:underline" href="../member/myPage">MYPAGE</a>
+					</li>
+					<li>
+						<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline" href="../member/doLogout">LOGOUT</a>
+					</li>
+				</c:if>
 			</ul>
 		</div>
 	</header>

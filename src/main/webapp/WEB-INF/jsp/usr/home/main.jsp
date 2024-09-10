@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="UTF-8">
-<title>Main</title>
+<title>수위드미</title>
 <link rel="stylesheet" href="/resource/common.css" />
 <script src="/resource/common.js" defer="defer"></script>
 <!-- 제이쿼리 -->
@@ -56,21 +57,30 @@ body {
 
 	<div class="container flex">
 		<div class="">
-			<a href="">실내 수영</a>
+			<a href="../pool/main">실내 수영</a>
 		</div>
 		<div class="flex-col justify-center">
 
 			<div>
-				<a href="">로그인</a>
-			</div>
-			<div>
-				<a href="">회원가입</a>
-			</div>
-			<div>
-				<a href="">로그아웃</a>
-			</div>
-			<div>
-				<a href="">마이페이지</a>
+				<ul>
+
+					<c:if test="${!rq.isLogined() }">
+						<li>
+							<a class="hover:underline" href="../member/login">로그인</a>
+						</li>
+						<li>
+							<a class="hover:underline" href="../member/join">회원가입</a>
+						</li>
+					</c:if>
+					<c:if test="${rq.isLogined() }">
+						<li>
+							<a class="hover:underline" href="../member/myPage">마이페이지</a>
+						</li>
+						<li>
+							<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline" href="../member/doLogout">로그아웃</a>
+						</li>
+					</c:if>
+				</ul>
 			</div>
 
 			<div>
@@ -82,7 +92,7 @@ body {
 			<div class="">환영합니다.</div>
 		</div>
 		<div class="">
-			<a href="">야외 수영</a>
+			<a href="../beach/main">야외 수영</a>
 		</div>
 	</div>
 

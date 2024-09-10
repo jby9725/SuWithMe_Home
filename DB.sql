@@ -1,11 +1,9 @@
 ###(INIT 시작)#########
 # DB 세팅
-DROP DATABASE IF EXISTS `24_08_Spring`;
-CREATE DATABASE `24_08_Spring`;
+DROP DATABASE IF EXISTS `SuWithMe`;
+CREATE DATABASE `SuWithMe`;
 
-USE `24_08_Spring`;
-
-
+USE `SuWithMe`;
 
 # 게시글 테이블 생성
 CREATE TABLE article (
@@ -20,6 +18,7 @@ CREATE TABLE article (
     `goodReactionPoint` INT(10) UNSIGNED NOT NULL DEFAULT 0,
     `badReactionPoint` INT(10) UNSIGNED NOT NULL DEFAULT 0
 );
+
 
 # 회원 테이블 생성
 CREATE TABLE `member`(
@@ -36,7 +35,6 @@ CREATE TABLE `member`(
       delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
       delDate DATETIME COMMENT '탈퇴 날짜'
 );
-
 
 # 게시판(board) 테이블 생성
 CREATE TABLE board (
@@ -61,55 +59,41 @@ CREATE TABLE reactionPoint (
     `point` INT(10) NOT NULL
 );
 
-# 파일 테이블 추가
-CREATE TABLE genFile (
-  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
-  regDate DATETIME DEFAULT NULL, # 작성날짜
-  updateDate DATETIME DEFAULT NULL, # 갱신날짜
-  delDate DATETIME DEFAULT NULL, # 삭제날짜
-  delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0, # 삭제상태(0:미삭제,1:삭제)
-  relTypeCode CHAR(50) NOT NULL, # 관련 데이터 타입(article, member)
-  relId INT(10) UNSIGNED NOT NULL, # 관련 데이터 번호
-  originFileName VARCHAR(100) NOT NULL, # 업로드 당시의 파일이름
-  fileExt CHAR(10) NOT NULL, # 확장자
-  typeCode CHAR(20) NOT NULL, # 종류코드 (common)
-  type2Code CHAR(20) NOT NULL, # 종류2코드 (attatchment)
-  fileSize INT(10) UNSIGNED NOT NULL, # 파일의 사이즈
-  fileExtTypeCode CHAR(10) NOT NULL, # 파일규격코드(img, video)
-  fileExtType2Code CHAR(10) NOT NULL, # 파일규격2코드(jpg, mp4)
-  fileNo SMALLINT(2) UNSIGNED NOT NULL, # 파일번호 (1)
-  fileDir CHAR(20) NOT NULL, # 파일이 저장되는 폴더명
-  PRIMARY KEY (id),
-  KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
-);
-
 ## 게시판(board) 테스트 데이터 생성
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'NOTICE',
-`name` = '공지사항';
+`name` = '통합 공지사항';
 
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'FREE',
-`name` = '자유';
+`name` = '통합 자유 게시판';
 
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'QnA',
-`name` = '질의응답';
+`code` = 'POOL',
+`name` = '실내 수영 위드미 게시판';
 
--- 문자열 붙이기 + 랜덤 수 출력
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'BEACH',
+`name` = '야외 수영 위드미 게시판';
+
+
+-- 문자열 붙이기 + 랜덤 수 출력, 게시글 테스트 데이터 생성
 INSERT INTO article
 SET regDate = NOW(),
     updateDate = NOW(),
     memberId = CEILING(RAND() * 3),
-    boardId = CEILING(RAND() * 3),
+    boardId = CEILING(RAND() * 4),
     title = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
     `body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
+
 
 ## 회원 테스트 데이터 생성
 ## (관리자)
@@ -156,8 +140,6 @@ loginPw = 'test3',
 nickname = '회원3_닉네임',
 cellphoneNum = '01065656565',
 email = 'goast@gmail.com';
-
-
 
 ### 좋아요/싫어요 테이블 테스트 데이터 생성
 
@@ -219,6 +201,7 @@ ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
 
+
 # reply 테이블 생성
 CREATE TABLE reply (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -265,6 +248,7 @@ memberId = 2,
 relTypeCode = 'article',
 relId = 2,
 `body` = '댓글 4';
+
 
 # reply 테이블에 좋아요 관련 컬럼 추가
 ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
@@ -329,6 +313,11 @@ ON R.id = RP_SUM.relId
 SET R.goodReactionPoint = RP_SUM.goodReactionPoint,
 R.badReactionPoint = RP_SUM.badReactionPoint;
 
+
+# 기존의 회원 비번을 암호화
+UPDATE `member`
+SET loginPw = SHA2(loginPw,256);
+
 ###(INIT 끝)
 ##########################################
 
@@ -337,10 +326,12 @@ INSERT INTO article
 (
     regDate, updateDate, memberId, boardId, title, `body`
 )
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, CEILING(RAND() * 3), CONCAT('제목__', RAND()), CONCAT('내용__', RAND())
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, CEILING(RAND() * 2), CONCAT('제목__', RAND()), CONCAT('내용__', RAND())
 FROM article;
 
 ##########################################
+
+SHOW TABLES;
 
 SELECT *
 FROM article
@@ -358,8 +349,6 @@ FROM reactionPoint;
 SELECT * 
 FROM `reply`;
 
-SELECT * 
-FROM `genFile`;
 
 SELECT A.* , M.nickname AS extra__writer
 FROM article AS A
@@ -436,11 +425,3 @@ SELECT LAST_INSERT_ID();
 
 -- 1부터 100까지 랜덤 수
 SELECT CEILING(RAND() * 100);
-
--- 문자열 붙이기 + 랜덤 수 출력 업데이트
--- INSERT INTO article
--- SET regDate = NOW(),
---     updateDate = NOW(),
---     author = CEILING(RAND() * 3),   
---     title = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
---     `body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
