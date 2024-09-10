@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="WRITE"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
-<%-- <%@ include file="../common/toastUiEditorLib.jspf"%> --%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 
 <script type="text/javascript">
 	function ArticleWrite__submit(form) {
@@ -46,8 +46,9 @@
 							<select name="boardId">
 								<option value="" selected disabled>게시판을 선택해주세요.</option>
 								<option value="1">공지사항</option>
-								<option value="2">자유</option>
-								<option value="3">질의응답</option>
+								<option value="2">자유 게시판</option>
+								<option value="3">실내 수영 위드미 게시판</option>
+								<option value="4">야외 수영 위드미 게시판</option>
 							</select>
 						</td>
 
@@ -73,12 +74,12 @@
 
 					</tr>
 
-					<tr>
-						<th>첨부 이미지</th>
-						<td>
-							<input id="fileInput" placeholder="이미지를 선택해주세요" type="file" />
-						</td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<th>첨부 이미지</th> -->
+<!-- 						<td> -->
+<!-- 							<input id="fileInput" placeholder="이미지를 선택해주세요" type="file" /> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
 
 					<tr>
 						<th></th>

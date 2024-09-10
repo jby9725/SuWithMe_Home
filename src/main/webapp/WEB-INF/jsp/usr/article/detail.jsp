@@ -263,16 +263,16 @@ function doModifyReply(replyId) {
 		<th>제목</th>
 		<td>${article.title}</td>
 	</tr>
-	<tr>
-		<th style="text-align: center;">Attached Image</th>
-		<td style="text-align: center;">
-			<div style="text-align: center;">
-				<img class="mx-auto rounded-xl" src="${rq.getImgUri(article.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}"
-					alt="" />
-			</div>
-			<div>${rq.getImgUri(article.id)}</div>
-		</td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<th style="text-align: center;">Attached Image</th> -->
+<!-- 		<td style="text-align: center;"> -->
+<!-- 			<div style="text-align: center;"> -->
+<%-- 				<img class="mx-auto rounded-xl" src="${rq.getImgUri(article.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" --%>
+<!-- 					alt="" /> -->
+<!-- 			</div> -->
+<%-- 			<div>${rq.getImgUri(article.id)}</div> --%>
+<!-- 		</td> -->
+<!-- 	</tr> -->
 	<tr>
 		<th>작성일자</th>
 		<td>${article.regDate}</td>
