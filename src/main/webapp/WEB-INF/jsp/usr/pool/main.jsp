@@ -4,6 +4,9 @@
 <%@ include file="../common/head_Option.jspf"%>
 <!-- 여기서부터 내용 -->
 
+<!-- 배경 -->
+<div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
+
 <div class="">
 	<a href="../article/list?boardId=1">공지사항</a>
 </div>

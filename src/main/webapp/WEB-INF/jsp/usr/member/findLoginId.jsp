@@ -21,6 +21,9 @@
 	}
 </script>
 
+<!-- 배경 -->
+<div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
+
 <section class="mt-24 text-xl px-4"">
 	<div class="mx-auto">
 		<form action="../member/doFindLoginId" method="POST" onsubmit="MemberFindLoginId__submit(this);">

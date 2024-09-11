@@ -3,6 +3,8 @@
 <c:set var="pageTitle" value="CHECKPW"></c:set>
 <%@ include file="../common/head_NonOption.jspf"%>
 
+<!-- 배경 -->
+<div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">

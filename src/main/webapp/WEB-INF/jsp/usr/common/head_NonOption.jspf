@@ -24,19 +24,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.waves.min.js"></script>
 
-<script>
-	VANTA.WAVES({
-		el : "#background",
-		mouseControls : true,
-		touchControls : true,
-		gyroControls : false,
-		minHeight : 200.00,
-		minWidth : 200.00,
-		scale : 1.00,
-		scaleMobile : 1.00,
-		color : 0x1d549b
-	})
-</script>
 
 </head>
 
@@ -46,7 +33,7 @@
 	<header class="bg-white">
 		<div class="flex h-20 mx-auto items-center text-3xl">
 			<a href="/">
-				<img src="/resource/LOGO_black.png" alt="logo" class="h-20">
+				<img src="/resource/LOGO_black2.png" alt="logo" class="h-20">
 			</a>
 			<div class="flex-grow"></div>
 		</div>

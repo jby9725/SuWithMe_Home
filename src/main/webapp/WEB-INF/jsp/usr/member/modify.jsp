@@ -3,6 +3,8 @@
 <c:set var="pageTitle" value="MEMBER MODIFY"></c:set>
 <%@ include file="../common/head_NonOption.jspf"%>
 
+<!-- 배경 -->
+<div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
 <script type="text/javascript">
 	function MemberModify__submit(form) {
