@@ -257,199 +257,205 @@ function doModifyReply(replyId) {
 <!-- 배경 -->
 <div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
-<table border="1" cellspacing="0" cellpadding="5">
-	<tr>
-		<th>번호</th>
-		<td>${article.id}</td>
-	</tr>
-	<tr>
-		<th>제목</th>
-		<td>${article.title}</td>
-	</tr>
-<!-- 	<tr> -->
-<!-- 		<th style="text-align: center;">Attached Image</th> -->
-<!-- 		<td style="text-align: center;"> -->
-<!-- 			<div style="text-align: center;"> -->
-<%-- 				<img class="mx-auto rounded-xl" src="${rq.getImgUri(article.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" --%>
-<!-- 					alt="" /> -->
-<!-- 			</div> -->
-<%-- 			<div>${rq.getImgUri(article.id)}</div> --%>
-<!-- 		</td> -->
-<!-- 	</tr> -->
-	<tr>
-		<th>작성일자</th>
-		<td>${article.regDate}</td>
-	</tr>
-	<tr>
-		<th>작성자</th>
-		<td>${article.extra__writer}</td>
-	</tr>
-	<tr>
-		<th>조회수</th>
-		<td>
-			<span class="article-detail__hit-count">${article.hit}</span>
-		</td>
-	</tr>
-	<tr>
-		<th>좋아요</th>
-		<td id="likeCount" style="text-align: center;">${article.goodReactionPoint}</td>
-	</tr>
-	<tr>
-		<th>싫어요</th>
-		<td id="DislikeCount" style="text-align: center;">${article.badReactionPoint}</td>
-	</tr>
-	<!-- 	<tr> -->
-	<!-- 		<th>좋아요 / 싫어요</th> -->
-	<%-- 		<td>LIKE ${article.goodReactionPoint} / DISLIKE ${article.badReactionPoint}</td> --%>
-	<!-- 	</tr> -->
-	<tr>
-		<th>게시판 번호</th>
-		<td>${article.boardId}</td>
-	</tr>
-	<tr>
-		<th>내용</th>
-		<td>
-			<div class="toast-ui-viewer">
-				<script type="text/x-template">${article.body}</script>
-			</div>
-		</td>
-	</tr>
-</table>
+<!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
+<section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
 
-<div class="btns flex flex-col space-y-4">
-	<!-- 좋아요와 싫어요 버튼을 한 줄에 배치 -->
+	<!-- 이제부터 내용.. -->
+	<table border="1" cellspacing="0" cellpadding="5">
+		<tr>
+			<th>번호</th>
+			<td>${article.id}</td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td>${article.title}</td>
+		</tr>
+		<!-- 	<tr> -->
+		<!-- 		<th style="text-align: center;">Attached Image</th> -->
+		<!-- 		<td style="text-align: center;"> -->
+		<!-- 			<div style="text-align: center;"> -->
+		<%-- 				<img class="mx-auto rounded-xl" src="${rq.getImgUri(article.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" --%>
+		<!-- 					alt="" /> -->
+		<!-- 			</div> -->
+		<%-- 			<div>${rq.getImgUri(article.id)}</div> --%>
+		<!-- 		</td> -->
+		<!-- 	</tr> -->
+		<tr>
+			<th>작성일자</th>
+			<td>${article.regDate}</td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td>${article.extra__writer}</td>
+		</tr>
+		<tr>
+			<th>조회수</th>
+			<td>
+				<span class="article-detail__hit-count">${article.hit}</span>
+			</td>
+		</tr>
+		<tr>
+			<th>좋아요</th>
+			<td id="likeCount" style="text-align: center;">${article.goodReactionPoint}</td>
+		</tr>
+		<tr>
+			<th>싫어요</th>
+			<td id="DislikeCount" style="text-align: center;">${article.badReactionPoint}</td>
+		</tr>
+		<!-- 	<tr> -->
+		<!-- 		<th>좋아요 / 싫어요</th> -->
+		<%-- 		<td>LIKE ${article.goodReactionPoint} / DISLIKE ${article.badReactionPoint}</td> --%>
+		<!-- 	</tr> -->
+		<tr>
+			<th>게시판 번호</th>
+			<td>${article.boardId}</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td>
+				<div class="toast-ui-viewer">
+					<script type="text/x-template">${article.body}</script>
+				</div>
+			</td>
+		</tr>
+	</table>
 
-	<div class="flex justyfy-center space-x-4">
+	<div class="btns flex flex-col space-y-4">
+		<!-- 좋아요와 싫어요 버튼을 한 줄에 배치 -->
 
-		<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction(${param.id})">
-			👍 LIKE
-			<span class="likeCount">${article.goodReactionPoint}</span>
-		</button>
-		<button id="DislikeButton" class="btn btn-outline btn-error" onclick="doBadReaction(${param.id})">
-			👎 DISLIKE
-			<span class="DislikeCount">${article.badReactionPoint}</span>
-		</button>
+		<div class="flex justyfy-center space-x-4">
 
+			<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction(${param.id})">
+				👍 LIKE
+				<span class="likeCount">${article.goodReactionPoint}</span>
+			</button>
+			<button id="DislikeButton" class="btn btn-outline btn-error" onclick="doBadReaction(${param.id})">
+				👎 DISLIKE
+				<span class="DislikeCount">${article.badReactionPoint}</span>
+			</button>
+
+		</div>
+
+		<!-- 	<div class="flex justify-center space-x-4"> -->
+
+		<!-- 		<button type="button" class="btn btn-outline btn-success article-detail__like-count" -->
+		<%-- 			onclick="window.location.href='/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.currentUri}'"> --%>
+		<%-- 			👍(●'◡'●) ${article.goodReactionPoint}</button> --%>
+
+		<%-- 		<%-- 		<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
+
+		<%-- 		<%-- 			class="btn btn-outline btn-success"> 👍(●'◡'●) ${article.goodReactionPoint}</a> --%>
+
+		<%-- 		<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
+		<%-- 			class="btn btn-outline btn-error">👎(╬▔皿▔)╯ ${article.badReactionPoint}</a> --%>
+
+		<!-- 	</div> -->
+
+		<!-- 뒤로 가기, 수정, 삭제 버튼들 -->
+		<div class="flex justify-center space-x-4 mt-4">
+			<button class="btn" type="button" onclick="history.back()">뒤로 가기</button>
+			<c:if test="${article.userCanModify }">
+				<a class="btn" href="../article/modify?id=${article.id }">수정</a>
+			</c:if>
+			<c:if test="${article.userCanDelete }">
+				<a class="btn" href="../article/doDelete?id=${article.id }">삭제</a>
+			</c:if>
+		</div>
 	</div>
 
-	<!-- 	<div class="flex justify-center space-x-4"> -->
 
-	<!-- 		<button type="button" class="btn btn-outline btn-success article-detail__like-count" -->
-	<%-- 			onclick="window.location.href='/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.currentUri}'"> --%>
-	<%-- 			👍(●'◡'●) ${article.goodReactionPoint}</button> --%>
+	<!-- 댓글 -->
+	<section class="mt-24 text-xl px-4">
 
-	<%-- 		<%-- 		<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
+		<c:if test="${rq.isLogined() }">
+			<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;" )>
+				<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+					<input type="hidden" name="relTypeCode" value="article" />
+					<input type="hidden" name="relId" value="${article.id }" />
+					<tbody>
 
-	<%-- 		<%-- 			class="btn btn-outline btn-success"> 👍(●'◡'●) ${article.goodReactionPoint}</a> --%>
+						<tr>
+							<th>댓글 내용 입력</th>
+							<td style="text-align: center;">
+								<textarea class="input input-bordered input-sm w-full max-w-xs" name="body" autocomplete="off" type="text"
+									placeholder="내용을 입력해주세요."></textarea>
+							</td>
 
-	<%-- 		<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
-	<%-- 			class="btn btn-outline btn-error">👎(╬▔皿▔)╯ ${article.badReactionPoint}</a> --%>
+						</tr>
+						<tr>
+							<th></th>
+							<td style="text-align: center;">
+								<button class="btn btn-outline">작성</button>
+							</td>
 
-	<!-- 	</div> -->
-
-	<!-- 뒤로 가기, 수정, 삭제 버튼들 -->
-	<div class="flex justify-center space-x-4 mt-4">
-		<button class="btn" type="button" onclick="history.back()">뒤로 가기</button>
-		<c:if test="${article.userCanModify }">
-			<a class="btn" href="../article/modify?id=${article.id }">수정</a>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</c:if>
-		<c:if test="${article.userCanDelete }">
-			<a class="btn" href="../article/doDelete?id=${article.id }">삭제</a>
-		</c:if>
-	</div>
-</div>
 
-
-<!-- 댓글 -->
-<section class="mt-24 text-xl px-4">
-
-	<c:if test="${rq.isLogined() }">
-		<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;" )>
-			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-				<input type="hidden" name="relTypeCode" value="article" />
-				<input type="hidden" name="relId" value="${article.id }" />
-				<tbody>
-
-					<tr>
-						<th>댓글 내용 입력</th>
-						<td style="text-align: center;">
-							<textarea class="input input-bordered input-sm w-full max-w-xs" name="body" autocomplete="off" type="text"
-								placeholder="내용을 입력해주세요."></textarea>
-						</td>
-
-					</tr>
-					<tr>
-						<th></th>
-						<td style="text-align: center;">
-							<button class="btn btn-outline">작성</button>
-						</td>
-
-					</tr>
-				</tbody>
-			</table>
-		</form>
-	</c:if>
-
-	<c:if test="${!rq.isLogined() }">
-		<!-- 댓글 작성을 위해 <a class="btn btn-outline btn-primary btn-sm" href="../member/login">로그인</a>이 필요합니다 -->
+		<c:if test="${!rq.isLogined() }">
+			<!-- 댓글 작성을 위해 <a class="btn btn-outline btn-primary btn-sm" href="../member/login">로그인</a>이 필요합니다 -->
 	댓글 작성을 위해 <a class="btn btn-sm btn-outline btn-primary" href="${rq.loginUri }">로그인</a>이 필요합니다.
 	</c:if>
 
-	<!-- 	댓글 리스트 -->
-	<div class="mx-auto">
-		<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-			<thead>
-				<tr>
-					<th style="text-align: center;">Registration Date</th>
-					<th style="text-align: center;">Writer</th>
-					<th style="text-align: center;">Body</th>
-					<th style="text-align: center;">Like</th>
-					<th style="text-align: center;">Dislike</th>
-					<th style="text-align: center;">Edit</th>
-					<th style="text-align: center;">Delete</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="reply" items="${replies}">
-					<tr class="hover">
-						<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
-						<td style="text-align: center;">${reply.extra__writer}</td>
-						<%-- <td style="text-align: center;">${reply.body}</td> --%>
-						<td style="text-align: center;">
-							<span id="reply-${reply.id }">${reply.body}</span>
-							<form method="POST" id="modify-form-${reply.id }" style="display: none;" action="/usr/reply/doModify">
-								<input type="text" value="${reply.body }" name="reply-text-${reply.id }" />
-							</form>
-						</td>
-						<td style="text-align: center;">${reply.goodReactionPoint}</td>
-						<td style="text-align: center;">${reply.badReactionPoint}</td>
-						<td style="text-align: center;">
-							<c:if test="${reply.userCanModify }">
-								<%-- <a class="btn btn-outline btn-xs btn-success" href="../reply/modify?id=${reply.id }">수정</a> --%>
-								<button onclick="toggleModifybtn('${reply.id}');" id="modify-btn-${reply.id }" style="white-space: nowrap;"
-									class="btn btn-outline btn-xs btn-success">수정</button>
-								<button onclick="doModifyReply('${reply.id}');" style="white-space: nowrap; display: none;"
-									id="save-btn-${reply.id }" class="btn btn-outline btn-xs">저장</button>
-							</c:if>
-						</td>
-						<td style="text-align: center;">
-							<c:if test="${reply.userCanDelete }">
-								<a class="btn btn-outline btn-xs btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-									href="../reply/doDelete?id=${reply.id }">삭제</a>
-							</c:if>
-						</td>
-					</tr>
-				</c:forEach>
-
-				<c:if test="${empty replies}">
+		<!-- 	댓글 리스트 -->
+		<div class="mx-auto">
+			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+				<thead>
 					<tr>
-						<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+						<th style="text-align: center;">Registration Date</th>
+						<th style="text-align: center;">Writer</th>
+						<th style="text-align: center;">Body</th>
+						<th style="text-align: center;">Like</th>
+						<th style="text-align: center;">Dislike</th>
+						<th style="text-align: center;">Edit</th>
+						<th style="text-align: center;">Delete</th>
 					</tr>
-				</c:if>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach var="reply" items="${replies}">
+						<tr class="hover">
+							<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
+							<td style="text-align: center;">${reply.extra__writer}</td>
+							<%-- <td style="text-align: center;">${reply.body}</td> --%>
+							<td style="text-align: center;">
+								<span id="reply-${reply.id }">${reply.body}</span>
+								<form method="POST" id="modify-form-${reply.id }" style="display: none;" action="/usr/reply/doModify">
+									<input type="text" value="${reply.body }" name="reply-text-${reply.id }" />
+								</form>
+							</td>
+							<td style="text-align: center;">${reply.goodReactionPoint}</td>
+							<td style="text-align: center;">${reply.badReactionPoint}</td>
+							<td style="text-align: center;">
+								<c:if test="${reply.userCanModify }">
+									<%-- <a class="btn btn-outline btn-xs btn-success" href="../reply/modify?id=${reply.id }">수정</a> --%>
+									<button onclick="toggleModifybtn('${reply.id}');" id="modify-btn-${reply.id }" style="white-space: nowrap;"
+										class="btn btn-outline btn-xs btn-success">수정</button>
+									<button onclick="doModifyReply('${reply.id}');" style="white-space: nowrap; display: none;"
+										id="save-btn-${reply.id }" class="btn btn-outline btn-xs">저장</button>
+								</c:if>
+							</td>
+							<td style="text-align: center;">
+								<c:if test="${reply.userCanDelete }">
+									<a class="btn btn-outline btn-xs btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+										href="../reply/doDelete?id=${reply.id }">삭제</a>
+								</c:if>
+							</td>
+						</tr>
+					</c:forEach>
 
-	</div>
+					<c:if test="${empty replies}">
+						<tr>
+							<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+						</tr>
+					</c:if>
+				</tbody>
+			</table>
+
+		</div>
+	</section>
+
 </section>
 
 <%@ include file="../common/foot.jspf"%>

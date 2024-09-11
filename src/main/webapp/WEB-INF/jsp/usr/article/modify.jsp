@@ -29,69 +29,73 @@
 <!-- 배경 -->
 <div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
+<!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
+<section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
 
-<section class="mt-24 text-xl px-4">
-	<div class="mx-auto">
-		<form onsubmit="ArticleModify__submit(this); return false;" action=" ../article/doModify" method="POST">
-			<input type="hidden" name="id" value="${article.id}" />
-			<input type="hidden" name="body">
-			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-				<tbody>
-					<tr>
-						<th style="text-align: center;">ID</th>
-						<td style="text-align: center;">${article.id}</td>
-					</tr>
-					<tr>
-						<th style="text-align: center;">Registration Date</th>
-						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
-					</tr>
-					<tr>
-						<th style="text-align: center;">Modified date</th>
-						<td style="text-align: center;">${article.updateDate}</td>
-					</tr>
-					<tr>
-						<th style="text-align: center;">Writer</th>
-						<td style="text-align: center;">${article.extra__writer}</td>
-					</tr>
-					<tr>
-						<th style="text-align: center;">Title</th>
-						<td style="text-align: center;">
-							<input name="title" value="${article.title}" type="text" autocomplete="off" placeholder="새 제목을 입력해"
-								class="input input-bordered input-primary w-full max-w-xs input-sm " />
-						</td>
-					</tr>
-					<tr>
-						<th style="text-align: center;">Body</th>
-						<td style="text-align: center;">
-<%-- 							<input name="body" value="${article.body}" type="text" autocomplete="off" placeholder="새 내용을 입력해" --%>
-<!-- 								class="input input-bordered input-primary w-full max-w-xs input-sm " /> -->
-							<div class="toast-ui-editor">
-								<script type="text/x-template">${article.body }
+	<section class="mt-24 text-xl px-4">
+		<div class="mx-auto">
+			<form onsubmit="ArticleModify__submit(this); return false;" action=" ../article/doModify" method="POST">
+				<input type="hidden" name="id" value="${article.id}" />
+				<input type="hidden" name="body">
+				<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+					<tbody>
+						<tr>
+							<th style="text-align: center;">ID</th>
+							<td style="text-align: center;">${article.id}</td>
+						</tr>
+						<tr>
+							<th style="text-align: center;">Registration Date</th>
+							<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
+						</tr>
+						<tr>
+							<th style="text-align: center;">Modified date</th>
+							<td style="text-align: center;">${article.updateDate}</td>
+						</tr>
+						<tr>
+							<th style="text-align: center;">Writer</th>
+							<td style="text-align: center;">${article.extra__writer}</td>
+						</tr>
+						<tr>
+							<th style="text-align: center;">Title</th>
+							<td style="text-align: center;">
+								<input name="title" value="${article.title}" type="text" autocomplete="off" placeholder="새 제목을 입력해"
+									class="input input-bordered input-primary w-full max-w-xs input-sm " />
+							</td>
+						</tr>
+						<tr>
+							<th style="text-align: center;">Body</th>
+							<td style="text-align: center;">
+								<%-- 							<input name="body" value="${article.body}" type="text" autocomplete="off" placeholder="새 내용을 입력해" --%>
+								<!-- 								class="input input-bordered input-primary w-full max-w-xs input-sm " /> -->
+								<div class="toast-ui-editor">
+									<script type="text/x-template">${article.body }
       </script>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td style="text-align: center;">
-							<button class="btn btn-primary">수정</button>
-						</td>
-					</tr>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td style="text-align: center;">
+								<button class="btn btn-primary">수정</button>
+							</td>
+						</tr>
 
-				</tbody>
-			</table>
-		</form>
-		<div class="btns">
-			<button class="btn" type="button" onclick="history.back()">뒤로가기</button>
-			<c:if test="${article.userCanModify }">
-				<a class="btn" href="../article/modify?id=${article.id }">수정</a>
-			</c:if>
-			<c:if test="${article.userCanDelete }">
-				<a class="btn" href="../article/doDelete?id=${article.id }">삭제</a>
-			</c:if>
+					</tbody>
+				</table>
+			</form>
+			<div class="btns">
+				<button class="btn" type="button" onclick="history.back()">뒤로가기</button>
+				<c:if test="${article.userCanModify }">
+					<a class="btn" href="../article/modify?id=${article.id }">수정</a>
+				</c:if>
+				<c:if test="${article.userCanDelete }">
+					<a class="btn" href="../article/doDelete?id=${article.id }">삭제</a>
+				</c:if>
 
+			</div>
 		</div>
-	</div>
+	</section>
+
 </section>
 
 <%@ include file="../common/foot.jspf"%>
