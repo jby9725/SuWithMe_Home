@@ -22,10 +22,12 @@
 <script>
 	var IMG_PATH = '/resource/32-icon.png';
 	var position = new naver.maps.LatLng(37.3849483, 127.1229117);
+	var position2 = new naver.maps.LatLng(37.3849490, 127.5229117);
+	var position3 = new naver.maps.LatLng(37.3849497, 127.9229117);
 
 	var map = new naver.maps.Map('map', {
 		center : position,
-		zoom : 19
+		zoom : 9
 	});
 
 	var markerOptions = {
@@ -39,11 +41,36 @@
 		}
 	};
 
-	var marker = new naver.maps.Marker(markerOptions);
+	var markerOptions2 = {
+			position : position2.destinationPoint(90, 15),
+			map : map,
+			icon : {
+				url : IMG_PATH,
+				size : new naver.maps.Size(50, 50),
+				origin : new naver.maps.Point(0, 0),
+				anchor : new naver.maps.Point(25, 25)
+			}
+		};
 
-	naver.maps.Event.addListener(map, 'click', function(e) {
-		marker.setPosition(e.coord); // e.coord : 지도를 클릭할 때 그 클릭한 위치의 좌표를 의미
-	});
+	var markerOptions3 = {
+			position : position3.destinationPoint(90, 15),
+			map : map,
+			icon : {
+				url : IMG_PATH,
+				size : new naver.maps.Size(50, 50),
+				origin : new naver.maps.Point(0, 0),
+				anchor : new naver.maps.Point(25, 25)
+			}
+		};
+	
+	var marker = new naver.maps.Marker(markerOptions);
+	var marker2 = new naver.maps.Marker(markerOptions2);
+	var marker3 = new naver.maps.Marker(markerOptions3);
+
+	// 클릭시 마커 움직이기 
+// 	naver.maps.Event.addListener(map, 'click', function(e) {
+// 		marker.setPosition(e.coord); // e.coord : 지도를 클릭할 때 그 클릭한 위치의 좌표를 의미
+// 	});
 </script>
 
 <!-- 여기서부터 내용 끝 -->

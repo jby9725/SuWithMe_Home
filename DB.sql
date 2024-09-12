@@ -320,13 +320,46 @@ SET loginPw = SHA2(loginPw,256);
 
 ###(INIT 끝)
 ##########################################
+###(프로젝트 고유 테이블 관련)
+
+## 수영장 정보 테이블 생성
+CREATE TABLE pool (
+    id INT PRIMARY KEY,		-- 번호
+    statusCode VARCHAR(10),	-- 영업상태구분코드
+    statusName VARCHAR(50),	-- 영업상태명
+    detailStatusCode VARCHAR(10),	-- 상세영업상태코드
+    detailStatusName VARCHAR(50),	-- 상세영업상태명
+    suspensionStartDate DATE,	-- 휴업시작일자
+    suspensionEndDate DATE,		-- 휴업종료일자
+    callNumber VARCHAR(20),	-- 소재지전화
+    postalCodeLocation VARCHAR(255),	-- 소재지우편번호
+    postalCodeStreet TEXT(255),	-- 도로명우편번호
+    addressLocation TEXT,		-- 소재지전체주소
+    addressStreet TEXT,		-- 도로명전체주소
+    `name` TEXT,			-- 사업장명
+    latitude VARCHAR(20),		-- 좌표정보(x)
+    longitude VARCHAR(20)	-- 좌표정보(y)
+);
+
+ALTER TABLE pool MODIFY suspensionStartDate DATE DEFAULT NULL;
+ALTER TABLE pool MODIFY suspensionEndDate DATE DEFAULT NULL;
+
+DROP TABLE pool;
+
+SELECT * FROM pool;
+
+-- 1015개 : 정상 그 외 비정상
+SELECT COUNT(*) FROM pool;
+
+###(INIT 끝)
+##########################################
 
 ## 게시글 테스트 데이터 대량 생성
 INSERT INTO article
 (
     regDate, updateDate, memberId, boardId, title, `body`
 )
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, CEILING(RAND() * 2), CONCAT('제목__', RAND()), CONCAT('내용__', RAND())
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, CEILING(RAND() * 4), CONCAT('제목__', RAND()), CONCAT('내용__', RAND())
 FROM article;
 
 ##########################################
