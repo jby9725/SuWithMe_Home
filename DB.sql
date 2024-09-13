@@ -351,6 +351,18 @@ SELECT * FROM pool;
 -- 1015개 : 정상 그 외 비정상
 SELECT COUNT(*) FROM pool;
 
+-- 테스트데이터 5개
+-- 삼부스포렉스
+SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%삼부%';
+-- 스위밍키즈 도안관저점
+SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%스위밍키즈 도안관저점%';
+-- 프렌즈 아쿠아 키즈풀
+SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%프렌즈 아쿠아 키즈풀%';
+-- 로키 스위밍 클럽
+SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%로키 스위밍 클럽%';
+-- 아쿠아 차일드
+SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%아쿠아 차일드';
+
 ###(INIT 끝)
 ##########################################
 
@@ -364,7 +376,7 @@ FROM article;
 
 ##########################################
 
-SHOW TABLES;
+show tables;
 
 SELECT *
 FROM article

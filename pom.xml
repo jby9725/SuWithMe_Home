@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -164,6 +165,34 @@
 			<version>5.9</version>
 		</dependency>
 
+		<!--		 https://mvnrepository.com/artifact/org.osgeo/proj4j -->
+		<!--		<dependency>-->
+		<!--			<groupId>org.osgeo</groupId>-->
+		<!--			<artifactId>proj4j</artifactId>-->
+		<!--			<version>0.1.0</version>-->
+		<!--		</dependency>-->
+
+		<dependency>
+			<groupId>org.locationtech.proj4j</groupId>
+			<artifactId>proj4j</artifactId>
+			<version>1.1.5</version>
+		</dependency>
+
+<!--		 https://mvnrepository.com/artifact/io.oss84.geotools/gt-referencing -->
+<!--		<dependency>-->
+<!--			<groupId>io.oss84.geotools</groupId>-->
+<!--			<artifactId>gt-referencing</artifactId>-->
+<!--			<version>24.2</version>-->
+<!--		</dependency>-->
+
+<!--		 https://mvnrepository.com/artifact/io.oss84.geotools/gt-epsg-hsql -->
+<!--		<dependency>-->
+<!--			<groupId>io.oss84.geotools</groupId>-->
+<!--			<artifactId>gt-epsg-hsql</artifactId>-->
+<!--			<version>24.2</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+
 	</dependencies>
 
 	<build>
@@ -182,7 +211,9 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<repositories>
+
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
@@ -191,7 +222,19 @@
 				<enabled>false</enabled>
 			</releases>
 		</repository>
+
+		<repository>
+			<id>geosolutions</id>
+			<url>https://maven.geo-solutions.it/</url>
+		</repository>
+
+		<repository>
+			<id>osgeo</id>
+			<url>https://download.osgeo.org/webdav/geotools/</url>
+		</repository>
+
 	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-snapshots</id>
