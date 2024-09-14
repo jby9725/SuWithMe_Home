@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.service.ArticleService;
 import com.example.demo.service.PoolService;
+import com.example.demo.util.CoordinateConverter;
 import com.opencsv.CSVReader;
 
 @Controller
@@ -37,13 +37,40 @@ public class UsrPoolController {
 		return "/usr/pool/teaching";
 	}
 
-	public static List<String[]> readCSV(String filePath) throws Exception {
-		CSVReader reader = new CSVReader(new FileReader(filePath));
-		List<String[]> data = reader.readAll();
-		reader.close();
-		return data;
+	// 일회성 코드(DB에 있는 중부원점 좌표를 위도/경도로 Update 하기)
+	@RequestMapping("/usr/pool/doLatlonUpdate")
+	@ResponseBody
+	public String doLatlonUpdate() {
+		String res = "doLatlonUpdate 성공!";
+
+		// 전체 pool의 갯수 알아오기
+		int poolsCount = poolService.getPoolsCount();
+
+		// pool의 갯수만큼 해당 행의
+		for (int i = 1; i <= poolsCount; i++) { // 
+			// 해당 행의...
+			// 중부원점 x좌표 알아오기
+			String tmpStrLat = poolService.getX(i);
+			if(tmpStrLat == "" || tmpStrLat.isEmpty())
+				continue;
+			double tmpLat = Double.parseDouble(tmpStrLat);
+			// 중부원점 y좌표 알아오기
+			String tmpStrLon = poolService.getY(i);
+			if(tmpStrLon == "" || tmpStrLon.isEmpty())
+				continue;
+			double tmpLon = Double.parseDouble(tmpStrLon);
+
+			// 알아온 좌표를 위도/경도로 계산하기
+			double[] result = CoordinateConverter.convertProj4j(tmpLat, tmpLon);
+
+			// 위도/경도 반영하기
+			poolService.setLatLon(i, result[0], result[1]);
+		}
+
+		return res + " " + poolsCount;
 	}
 
+	// 일회성 코드(DB에 .csv 파일의 내용 넣기)
 	@RequestMapping("/usr/pool/doSetting")
 	@ResponseBody
 	public String doSettingDB() {
@@ -75,7 +102,7 @@ public class UsrPoolController {
 
 				suspensionStartDate = (suspensionStartDate.isEmpty()) ? null : suspensionStartDate;
 				suspensionEndDate = (suspensionEndDate.isEmpty()) ? null : suspensionEndDate;
-				
+
 				String callNumber = nextLine[7]; // 소재지전화
 				String postalCodeLocation = nextLine[8]; // 소재지우편번호
 				String addressLocation = nextLine[9]; // 소재지전체주소
@@ -89,7 +116,7 @@ public class UsrPoolController {
 
 				System.err.println(id);
 				int temp = Integer.parseInt(id);
-				
+
 				poolService.doInsertPoolInfo(temp, statusCode, statusName, detailStatusCode, detailStatusName,
 						suspensionStartDate, suspensionEndDate, callNumber, postalCodeLocation, addressLocation,
 						addressStreet, postalCodeStreet, name, latitude, longitude);
@@ -120,7 +147,8 @@ public class UsrPoolController {
 		return "CSV to DB Insert 성공! <hr>" + output.toString();
 	}
 
-	@RequestMapping("/usr/pool/showData")
+	// 테스트용 코드
+	@RequestMapping("/usr/pool/showCSVData")
 	@ResponseBody
 	public String showData() {
 
@@ -160,7 +188,13 @@ public class UsrPoolController {
 			}
 		}
 
-		return "showData 성공! <hr>" + output.toString(); // CSV 파일 내용 출력
+		return "showCSVData 성공! <hr>" + output.toString(); // CSV 파일 내용 출력
 	}
 
+	public static List<String[]> readCSV(String filePath) throws Exception {
+		CSVReader reader = new CSVReader(new FileReader(filePath));
+		List<String[]> data = reader.readAll();
+		reader.close();
+		return data;
+	}
 }

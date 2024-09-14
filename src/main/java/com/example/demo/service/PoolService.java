@@ -29,4 +29,21 @@ public class PoolService {
 
 	}
 
+	public int getPoolsCount() {
+		return poolRepository.getPoolsCount();
+	}
+
+	public String getX(int i) {
+		return poolRepository.getX(i);
+	}
+
+	public String getY(int i) {
+		return poolRepository.getY(i);
+	}
+
+	public void setLatLon(int i, double lat, double lon) {
+		poolRepository.setLatLon(i, lat, lon);
+		System.err.println(i+"번째 행 Update...");
+	}
+
 }
