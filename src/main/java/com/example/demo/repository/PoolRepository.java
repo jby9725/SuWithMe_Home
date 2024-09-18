@@ -1,9 +1,13 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import com.example.demo.vo.Pool;
 
 @Mapper
 public interface PoolRepository {
@@ -11,8 +15,47 @@ public interface PoolRepository {
 	@Select("SELECT LAST_INSERT_ID();")
 	public int getLastInsertId();
 
+	@Select("""
+			<script>
+				SELECT COUNT(*)
+				FROM pool;
+			</script>
+			""")
+	public int getPoolsCount();
+
+//	@Select("""
+//			SELECT * FROM pool WHERE `name` LIKE '%삼부%';
+//			""")
+//	public List<Pool> getAllPools();
+
+	@Select("""
+			SELECT *
+			FROM pool
+			WHERE 1
+			AND latitude IS NOT NULL AND latitude != ''
+			AND longitude IS NOT NULL AND longitude != ''
+			AND statusCode = 1;
+			""")
+	public List<Pool> getAllPools();
+
+	@Select("""
+			SELECT latitude
+			FROM pool
+			WHERE id = #{id}
+			""")
+	public String getX(int id);
+
+	@Select("""
+			SELECT longitude
+			FROM pool
+			WHERE id = #{id}
+			""")
+	public String getY(int id);
+
+	// 이하 일회성 쿼리
+
 	@Insert("""
-			INSERT INTO`pool`
+			INSERT INTO `pool`
 			SET id = #{id},
 			statusCode = #{statusCode},
 			statusName = #{statusName},
@@ -33,28 +76,6 @@ public interface PoolRepository {
 			String detailStatusName, String suspensionStartDate, String suspensionEndDate, String callNumber,
 			String postalCodeLocation, String postalCodeStreet, String addressLocation, String addressStreet,
 			String name, String latitude, String longitude);
-
-	@Select("""
-			<script>
-				SELECT COUNT(*)
-				FROM pool;
-			</script>
-			""")
-	public int getPoolsCount();
-
-	@Select("""
-			SELECT latitude
-			FROM pool
-			WHERE id = #{id}
-			""")
-	public String getX(int id);
-
-	@Select("""
-			SELECT longitude
-			FROM pool
-			WHERE id = #{id}
-			""")
-	public String getY(int id);
 
 	@Update("""
 			UPDATE pool

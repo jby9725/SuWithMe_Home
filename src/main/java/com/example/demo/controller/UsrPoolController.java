@@ -9,11 +9,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.PoolService;
 import com.example.demo.util.CoordinateConverter;
+import com.example.demo.vo.Pool;
 import com.opencsv.CSVReader;
 
 @Controller
@@ -28,7 +30,12 @@ public class UsrPoolController {
 	}
 
 	@RequestMapping("/usr/pool/map")
-	public String showPoolMap() {
+	public String showPoolMap(Model model) {
+
+		// Pool 목록을 불러옴 (예: List<Pool>에서 Pool 클래스에 latitude와 longitude가 있음)
+		List<Pool> pools = poolService.getAllPools();
+		model.addAttribute("pools", pools); // JSP로 전달할 데이터
+		
 		return "/usr/pool/map";
 	}
 
@@ -47,16 +54,16 @@ public class UsrPoolController {
 		int poolsCount = poolService.getPoolsCount();
 
 		// pool의 갯수만큼 해당 행의
-		for (int i = 1; i <= poolsCount; i++) { // 
+		for (int i = 1; i <= poolsCount; i++) { //
 			// 해당 행의...
 			// 중부원점 x좌표 알아오기
 			String tmpStrLat = poolService.getX(i);
-			if(tmpStrLat == "" || tmpStrLat.isEmpty())
+			if (tmpStrLat == "" || tmpStrLat.isEmpty())
 				continue;
 			double tmpLat = Double.parseDouble(tmpStrLat);
 			// 중부원점 y좌표 알아오기
 			String tmpStrLon = poolService.getY(i);
-			if(tmpStrLon == "" || tmpStrLon.isEmpty())
+			if (tmpStrLon == "" || tmpStrLon.isEmpty())
 				continue;
 			double tmpLon = Double.parseDouble(tmpStrLon);
 

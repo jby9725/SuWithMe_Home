@@ -15,62 +15,63 @@
 <section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
 
 
-	<div id="map" class="" style="width: 800px; height: 700px;"></div>
+	<div id="map" class="" style="width: 100%; height: 100%;"></div>
 
 </section>
 
 <script>
 	var IMG_PATH = '/resource/32-icon.png';
-	var position = new naver.maps.LatLng(37.3849483, 127.1229117);
-	var position2 = new naver.maps.LatLng(37.3849490, 127.5229117);
-	var position3 = new naver.maps.LatLng(37.3849497, 127.9229117);
 
 	var map = new naver.maps.Map('map', {
-		center : position,
-		zoom : 9
+		center : new naver.maps.LatLng(36.3504396, 127.3849508), // 대전 시청의 위도/경도
+		zoom : 12
 	});
 
-	var markerOptions = {
-		position : position.destinationPoint(90, 15),
-		map : map,
-		icon : {
-			url : IMG_PATH,
-			size : new naver.maps.Size(50, 52),
-			origin : new naver.maps.Point(0, 0),
-			anchor : new naver.maps.Point(25, 26)
-		}
-	};
+	// InfoWindow 객체 생성
+	var infoWindow = new naver.maps.InfoWindow({
+		anchorSkew : true
+	});
 
-	var markerOptions2 = {
-			position : position2.destinationPoint(90, 15),
+	// 풀 목록의 위도/경도 데이터를 JSP에서 JavaScript로 전달
+	var pools = [];
+	<c:forEach var="pool" items="${pools}">
+	pools.push({
+		//         	id: ${pool.id}, // 고유 ID 추가
+		name : "<c:out value='${pool.name}'/>", // 수영장 이름
+		latitude : "${pool.latitude}",
+		longitude : "${pool.longitude}"
+	});
+	</c:forEach>
+
+	// 데이터가 제대로 들어왔는지 콘솔에서 확인
+	console.log("Pools 데이터: ", pools);
+
+	// 위도/경도 데이터를 기반으로 마커 생성
+	pools.forEach(function(pool) {
+		var marker = new naver.maps.Marker({
+			position : new naver.maps.LatLng(pool.latitude, pool.longitude),
 			map : map,
 			icon : {
 				url : IMG_PATH,
-				size : new naver.maps.Size(50, 50),
+				size : new naver.maps.Size(50, 52),
 				origin : new naver.maps.Point(0, 0),
-				anchor : new naver.maps.Point(25, 25)
+				anchor : new naver.maps.Point(25, 26)
 			}
-		};
+		});
 
-	var markerOptions3 = {
-			position : position3.destinationPoint(90, 15),
-			map : map,
-			icon : {
-				url : IMG_PATH,
-				size : new naver.maps.Size(50, 50),
-				origin : new naver.maps.Point(0, 0),
-				anchor : new naver.maps.Point(25, 25)
+		// 마커 클릭 시 InfoWindow에 수영장 이름을 표시
+		naver.maps.Event.addListener(marker, 'click', function(e) {
+			// InfoWindow가 열려 있으면 닫고, 열려 있지 않으면 열기
+			if (infoWindow.getMap()) {
+				infoWindow.close(); // InfoWindow가 열려 있으면 닫기
+			} else {
+				var contentString = '<div style="padding:10px;">' + pool.name
+						+ '</div>';
+				infoWindow.setContent(contentString); // InfoWindow 내용 설정
+				infoWindow.open(map, marker); // InfoWindow를 마커 위치에 열기
 			}
-		};
-	
-	var marker = new naver.maps.Marker(markerOptions);
-	var marker2 = new naver.maps.Marker(markerOptions2);
-	var marker3 = new naver.maps.Marker(markerOptions3);
-
-	// 클릭시 마커 움직이기 
-// 	naver.maps.Event.addListener(map, 'click', function(e) {
-// 		marker.setPosition(e.coord); // e.coord : 지도를 클릭할 때 그 클릭한 위치의 좌표를 의미
-// 	});
+		});
+	});
 </script>
 
 <!-- 여기서부터 내용 끝 -->

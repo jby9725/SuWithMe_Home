@@ -16,7 +16,6 @@ public class Pool {
 	private String detailStatusCode; // 상세영업상태코드
 	private String detailStatusName; // 상세영업상태명
 	
-	private String closingDate; // 폐업일자
 	private String suspensionStartDate; // 휴업시작일자
 	private String suspensionEndDate; // 휴업종료일자
 	
