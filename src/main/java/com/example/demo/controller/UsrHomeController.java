@@ -19,6 +19,12 @@ public class UsrHomeController {
 		return "/usr/home/main";
 	}
 
+	@RequestMapping("/usr/home/menu")
+	public String showMenu() {
+		return "/usr/home/menu";
+	}
+
+	
 	@RequestMapping("/usr/crawl")
 	public String doCrawl() {
 

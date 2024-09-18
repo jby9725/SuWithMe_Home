@@ -24,27 +24,19 @@
 <body>
 	<header class="bg-white">
 		<div class="flex h-20 mx-auto items-center text-3xl">
-			<a href="/">
-				<img src="/resource/LOGO_black2.png" alt="logo" class="h-20">
+			<a href="/"> <img src="/resource/LOGO_black2.png" alt="logo" class="h-20">
 			</a>
 			<div class="flex-grow"></div>
 			<ul class="flex">
 
 				<c:if test="${!rq.isLogined() }">
-					<li>
-						<a class="hover:underline" href="../member/login">로그인</a>
-					</li>
-					<li>
-						<a class="hover:underline" href="../member/join">회원가입</a>
-					</li>
+					<li><a class="hover:underline" href="../member/login">로그인</a></li>
+					<li><a class="hover:underline" href="../member/join">회원가입</a></li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
-					<li>
-						<a class="hover:underline" href="../member/myPage">마이페이지</a>
-					</li>
-					<li>
-						<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline" href="../member/doLogout">로그아웃</a>
-					</li>
+					<li><a class="hover:underline" href="../member/myPage">마이페이지</a></li>
+					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
+						href="../member/doLogout">로그아웃</a></li>
 				</c:if>
 			</ul>
 		</div>
