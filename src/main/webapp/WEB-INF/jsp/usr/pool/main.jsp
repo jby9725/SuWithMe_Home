@@ -20,7 +20,7 @@
 	<a href="../pool/map">수영장 지도</a>
 </div>
 <div class="">
-	<a href="../pool/teaching">수영강습 검색</a>
+	<a href="../pool/calender">수영 일정 관리</a>
 </div>
 
 

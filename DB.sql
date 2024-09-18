@@ -343,10 +343,35 @@ CREATE TABLE pool (
 
 SELECT * FROM pool;
 
+SELECT * 
+FROM pool
+where 1
+and latitude is not null AND latitude != ''
+AND longitude IS NOT NULL AND longitude != ''
+and statusCode = 1;
+
 SELECT id, `name`, latitude, longitude FROM pool;
 
 -- 1015개 : 정상 그 외 비정상
 SELECT COUNT(*) FROM pool;
+
+-- 930개
+SELECT count(*)
+FROM pool
+WHERE 1
+AND latitude IS NOT NULL AND latitude != ''
+AND longitude IS NOT NULL AND longitude != ''
+AND statusCode = 1;
+
+SELECT * 
+FROM pool
+WHERE 1
+AND latitude IS NOT NULL AND latitude != ''
+AND longitude IS NOT NULL AND longitude != ''
+AND statusCode = 1
+AND `name` LIKE '%인피니티풀%';
+
+SELECT * FROM pool WHERE `name` LIKE '%삼부%';
 
 -- 테스트데이터 5개
 -- 삼부스포렉스

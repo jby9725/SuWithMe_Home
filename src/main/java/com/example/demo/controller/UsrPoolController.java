@@ -39,9 +39,9 @@ public class UsrPoolController {
 		return "/usr/pool/map";
 	}
 
-	@RequestMapping("/usr/pool/teaching")
+	@RequestMapping("/usr/pool/calender")
 	public String showPoolTeaching() {
-		return "/usr/pool/teaching";
+		return "/usr/pool/calender";
 	}
 
 	// 일회성 코드(DB에 있는 중부원점 좌표를 위도/경도로 Update 하기)
