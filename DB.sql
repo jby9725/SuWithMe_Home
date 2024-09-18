@@ -345,10 +345,10 @@ SELECT * FROM pool;
 
 SELECT * 
 FROM pool
-where 1
-and latitude is not null AND latitude != ''
+WHERE 1
+AND latitude IS NOT NULL AND latitude != ''
 AND longitude IS NOT NULL AND longitude != ''
-and statusCode = 1;
+AND statusCode = 1;
 
 SELECT id, `name`, latitude, longitude FROM pool;
 
@@ -356,7 +356,7 @@ SELECT id, `name`, latitude, longitude FROM pool;
 SELECT COUNT(*) FROM pool;
 
 -- 930개
-SELECT count(*)
+SELECT COUNT(*)
 FROM pool
 WHERE 1
 AND latitude IS NOT NULL AND latitude != ''
@@ -373,6 +373,10 @@ AND `name` LIKE '%인피니티풀%';
 
 SELECT * FROM pool WHERE `name` LIKE '%삼부%';
 
+SELECT `name`, postalCodeStreet	, addressLocation
+FROM pool WHERE `name` LIKE '%로키 스위밍 클럽%';
+
+
 -- 테스트데이터 5개
 -- 삼부스포렉스
 SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%삼부%';
@@ -384,6 +388,20 @@ SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%프렌즈 아�
 SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%로키 스위밍 클럽%';
 -- 아쿠아 차일드
 SELECT `name`, latitude, longitude FROM pool WHERE `name` LIKE '%아쿠아 차일드';
+
+## 수영 일정 테이블 생성
+CREATE TABLE `event` (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- 일정 고유 ID
+    title VARCHAR(255) NOT NULL,        -- 일정 제목
+    `body` TEXT,                        -- 일정 설명
+    createDate DATETIME NOT NULL,       -- 일정 생성 시각
+    updateDate DATETIME NOT NULL,       -- 일정 수정 시각
+    startDate DATETIME NOT NULL,        -- 일정 시작 날짜와 시간
+    endDate DATETIME,                   -- 일정 종료 날짜와 시간 (없을 경우 NULL)
+    completed BOOLEAN DEFAULT FALSE,    -- 일정 완료 여부 (오수완 체크용)
+    userId INT                          -- 일정 작성자의 사용자 ID (FK)
+);
+
 
 ###(INIT 끝)
 ##########################################

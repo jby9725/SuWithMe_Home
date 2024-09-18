@@ -73,6 +73,9 @@ public class MyWebMVCConfigurer implements WebMvcConfigurer {
 		// 댓글
 		ir.addPathPatterns("/usr/reply/doWrite");
 
+		// 캘린더
+		ir.addPathPatterns("/usr/swimming/calender");
+		
 		// 관리자 로그인
 		ir.addPathPatterns("/adm/**");
 		ir.addPathPatterns("/adm/member/login");
