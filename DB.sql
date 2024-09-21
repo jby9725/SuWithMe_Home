@@ -396,12 +396,36 @@ CREATE TABLE `event` (
     `body` TEXT,                        -- 일정 설명
     createDate DATETIME NOT NULL,       -- 일정 생성 시각
     updateDate DATETIME NOT NULL,       -- 일정 수정 시각
-    startDate DATETIME NOT NULL,        -- 일정 시작 날짜와 시간
-    endDate DATETIME,                   -- 일정 종료 날짜와 시간 (없을 경우 NULL)
+    startDate DATE NOT NULL,        -- 일정 시작 날짜와 시간
+    endDate DATE,                   -- 일정 종료 날짜와 시간 (없을 경우 NULL)
     completed BOOLEAN DEFAULT FALSE,    -- 일정 완료 여부 (오수완 체크용)
-    userId INT                          -- 일정 작성자의 사용자 ID (FK)
+    memberId INT                          -- 일정 작성자의 사용자 ID (FK)
 );
 
+-- 캘린더 테스트 데이터 생성
+INSERT INTO `event`
+SET title = CONCAT('일정 제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
+    `body` = CONCAT('일정 내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
+    createDate = NOW(),
+    updateDate = NOW(),
+    startDate = NOW(),
+    endDate = NOW(),
+    memberId = 2;
+    
+SELECT * FROM `event`;
+
+SELECT * FROM `member`;
+
+-- 테스트 데이터 조회
+SELECT  M.loginId, E.*
+FROM `event` E
+INNER JOIN `member` M
+ON M.id = E.memberId;
+
+SELECT E.*, M.nickname
+FROM `event` E
+INNER JOIN `member` M
+ON M.id = E.memberId;
 
 ###(INIT 끝)
 ##########################################
