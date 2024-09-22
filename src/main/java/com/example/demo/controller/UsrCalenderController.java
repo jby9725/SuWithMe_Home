@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,15 @@ public class UsrCalenderController {
 
 		List<Event> events = calenderService.getAllEventsByMemberId(userId); // 모든 일정 조회
 		model.addAttribute("events", events); // 조회한 일정들을 모델에 추가
+
+		// 로그인한 사용자가 완료한 일정의 개수를 조회하여 모델에 추가
+		int completedEventCount = calenderService.getCompletedEventCountByMemberId(userId);
+		model.addAttribute("completedEventCount", completedEventCount);
+
+		// 오수완 왕 조회
+		Map<String, Object> topMember = calenderService.getTopCompletedMember();
+		model.addAttribute("topMember", topMember);
+
 		return "/usr/swimming/calender";
 	}
 
@@ -73,7 +83,7 @@ public class UsrCalenderController {
 	public ResultData markComplete(@RequestParam("eventId") int id) {
 
 		System.out.println("확인) eventId : " + id);
-		
+
 		if (id == 0) {
 			return ResultData.from("F-1", "일정 ID가 전달되지 않았습니다.");
 		}

@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -47,7 +48,6 @@ public interface CalenderRepository {
 			""")
 	public void modifyEvent(int id, String title, String body);
 
-	
 	// 이벤트 ID로 이벤트 조회
 	@Select("""
 			SELECT E.*, M.nickname AS nickname
@@ -67,4 +67,23 @@ public interface CalenderRepository {
 			""")
 	public void updateCompletedStatus(int eventId, boolean completed);
 
+	@Select("""
+			SELECT COUNT(*)
+			FROM `event`
+			WHERE memberId = #{memberId}
+			AND completed = TRUE;
+			""")
+	public int countCompletedEventsByMemberId(int memberId);
+
+	// 완료된 일정 개수로 오수완 왕을 찾는 쿼리
+	@Select("""
+			SELECT M.nickname, COUNT(E.id) as completedCount
+			FROM `event` E
+			INNER JOIN `member` M ON E.memberId = M.id
+			WHERE E.completed = TRUE
+			GROUP BY E.memberId
+			ORDER BY completedCount DESC
+			LIMIT 1;
+			""")
+	public Map<String, Object> getTopCompletedMember();
 }

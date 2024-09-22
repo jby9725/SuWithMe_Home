@@ -13,103 +13,103 @@
 <!-- 스타일 설정 -->
 <style>
 #calendar {
-    width: 100%;
-    height: 75vh; /* 화면 높이의 75%로 조정 */
-    max-width: 900px;
-    margin: 20px auto;
+	width: 100%;
+	height: 75vh; /* 화면 높이의 75%로 조정 */
+	max-width: 900px;
+	margin: 20px auto;
 }
 
 /* 날짜 셀에 이미지가 중앙에 크게 표시되도록 설정 */
 .fc-daygrid-day {
-    position: relative;  /* 내부 요소 절대 위치를 위해 부모 요소를 상대 위치로 설정 */
+	position: relative; /* 내부 요소 절대 위치를 위해 부모 요소를 상대 위치로 설정 */
 }
 
 /* 이벤트 칸의 스타일 수정 */
 .fc-daygrid-event {
-    border: 1px solid #000 !important;  /* 테두리 색상 설정 */
-    color: #000 !important;  /* 글자 색상을 검은색으로 설정 */
-    font-weight: bold;  /* 글자 두께 설정 */
-    z-index: 1 !important;  /* 이벤트 글씨 z-index 설정 */
+	border: 1px solid #000 !important; /* 테두리 색상 설정 */
+	color: #000 !important; /* 글자 색상을 검은색으로 설정 */
+	font-weight: bold; /* 글자 두께 설정 */
+	z-index: 1 !important; /* 이벤트 글씨 z-index 설정 */
 }
 
 /* 오수완 이미지 스타일 */
 .osuwan-img {
-    position: absolute;
-    width: 60px;  /* 이미지 크기 설정 */
-    height: 60px;  /* 이미지 크기 설정 */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.8;  /* 투명도 설정 */
-    z-index: 2;  /* 다른 요소보다 위에 표시 */
+	position: absolute;
+	width: 60px; /* 이미지 크기 설정 */
+	height: 60px; /* 이미지 크기 설정 */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 0.8; /* 투명도 설정 */
+	z-index: 2; /* 다른 요소보다 위에 표시 */
 }
 
 /* 일정 추가 버튼 스타일 */
 #addEventButton {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #4CAF50;  /* 버튼 배경색 */
-    color: white;  /* 버튼 글자색 */
-    border: none;  /* 테두리 없음 */
-    border-radius: 5px;  /* 모서리 둥글게 */
-    cursor: pointer;  /* 마우스 커서 변경 */
-    font-size: 16px;  /* 글자 크기 */
-    font-weight: bold;  /* 글자 굵게 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* 그림자 효과 */
-    transition: background-color 0.3s;  /* 배경색 전환 효과 */
+	display: block;
+	margin: 20px auto;
+	padding: 10px 20px;
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 글자색 */
+	border: none; /* 테두리 없음 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	cursor: pointer; /* 마우스 커서 변경 */
+	font-size: 16px; /* 글자 크기 */
+	font-weight: bold; /* 글자 굵게 */
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+	transition: background-color 0.3s; /* 배경색 전환 효과 */
 }
 
 #addEventButton:hover {
-    background-color: #45a049;  /* 마우스 오버 시 배경색 변경 */
+	background-color: #45a049; /* 마우스 오버 시 배경색 변경 */
 }
 
 /* 일정 추가 폼(모달) 스타일 */
 #addEventModal {
-    display: none;  /* 기본적으로 숨김 */
-    position: fixed;
-    z-index: 3;  /* 모달이 맨 위에 표시되도록 */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* 그림자 효과 */
-    border-radius: 8px;  /* 모서리 둥글게 */
+	display: none; /* 기본적으로 숨김 */
+	position: fixed;
+	z-index: 3; /* 모달이 맨 위에 표시되도록 */
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+	border-radius: 8px; /* 모서리 둥글게 */
 }
 
 /* 모달 배경 */
 #modalBackground {
-    display: none;  /* 기본적으로 숨김 */
-    position: fixed;
-    z-index: 2;  /* 모달 배경은 모달보다 뒤에 위치 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);  /* 반투명 배경 */
+	display: none; /* 기본적으로 숨김 */
+	position: fixed;
+	z-index: 2; /* 모달 배경은 모달보다 뒤에 위치 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
 }
 
 #addEventModal input, #addEventModal textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 }
 
 #addEventModal button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
 }
 
 #addEventModal button:hover {
-    background-color: #45a049;
+	background-color: #45a049;
 }
 </style>
 
@@ -227,11 +227,32 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
 <section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
 
-    <!-- 일정 추가 버튼 -->
-    <button id="addEventButton">일정 추가</button>
 
-    <!-- FullCalendar가 표시될 div -->
-    <div id="calendar" style="max-width: 900px; margin: 40px auto;"></div>
+	<!-- 오수완 왕 섹션 -->
+	<section class="top-completed-user">
+		<div style="text-align: center; font-size: 1.5em; margin: 20px 0;">
+			<strong>오수완 왕:</strong>
+			<c:choose>
+				<c:when test="${topMember != null}">
+                ${topMember.nickname} (완료 횟수: ${topMember.completedCount})
+            </c:when>
+				<c:otherwise>
+                오수완 왕이 아직 없습니다.
+            </c:otherwise>
+			</c:choose>
+		</div>
+	</section>
+
+	<!-- 나의 오수완 완료 횟수 출력 -->
+	<div style="text-align: center; font-size: 1.5em; margin: 20px 0;">
+		<strong>나의 오수완 완료 횟수:</strong> ${completedEventCount}회
+	</div>
+
+	<!-- 일정 추가 버튼 -->
+	<button id="addEventButton">일정 추가</button>
+
+	<!-- FullCalendar가 표시될 div -->
+	<div id="calendar" style="max-width: 900px; margin: 40px auto;"></div>
 
 </section>
 
@@ -240,21 +261,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 일정 추가 폼(모달) -->
 <div id="addEventModal">
-    <form id="addEventForm">
-        <label for="eventTitle">일정 제목</label>
-        <input type="text" id="eventTitle" name="eventTitle" required>
-        
-        <label for="eventDescription">일정 설명</label>
-        <textarea id="eventDescription" name="eventDescription"></textarea>
-        
-        <label for="eventStartDate">시작 날짜</label>
-        <input type="date" id="eventStartDate" name="eventStartDate" required>
-        
-        <label for="eventEndDate">종료 날짜</label>
-        <input type="date" id="eventEndDate" name="eventEndDate" required>
-        
-        <button type="submit">일정 추가</button>
-    </form>
+	<form id="addEventForm">
+		<label for="eventTitle">일정 제목</label> <input type="text" id="eventTitle" name="eventTitle" required> <label
+			for="eventDescription">일정 설명</label>
+		<textarea id="eventDescription" name="eventDescription"></textarea>
+
+		<label for="eventStartDate">시작 날짜</label> <input type="date" id="eventStartDate" name="eventStartDate" required>
+
+		<label for="eventEndDate">종료 날짜</label> <input type="date" id="eventEndDate" name="eventEndDate" required>
+
+		<button type="submit">일정 추가</button>
+	</form>
 </div>
 
 <!-- 여기서부터 내용 끝 -->

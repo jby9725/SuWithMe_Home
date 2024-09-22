@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,4 +75,11 @@ public class CalenderService {
 		calenderRepository.modifyEvent(id, title, body);
 	}
 	
+	public int getCompletedEventCountByMemberId(int memberId) {
+        return calenderRepository.countCompletedEventsByMemberId(memberId);
+    }
+
+	public Map<String, Object> getTopCompletedMember() {
+		return calenderRepository.getTopCompletedMember();
+	}
 }
