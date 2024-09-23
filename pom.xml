@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.9-SNAPSHOT</version>
+		<version>3.2.10</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.KoreaIT.jby.demo</groupId>
@@ -178,19 +178,26 @@
 			<version>1.1.5</version>
 		</dependency>
 
-<!--		 https://mvnrepository.com/artifact/io.oss84.geotools/gt-referencing -->
-<!--		<dependency>-->
-<!--			<groupId>io.oss84.geotools</groupId>-->
-<!--			<artifactId>gt-referencing</artifactId>-->
-<!--			<version>24.2</version>-->
-<!--		</dependency>-->
+		<!--		 https://mvnrepository.com/artifact/io.oss84.geotools/gt-referencing -->
+		<!--		<dependency>-->
+		<!--			<groupId>io.oss84.geotools</groupId>-->
+		<!--			<artifactId>gt-referencing</artifactId>-->
+		<!--			<version>24.2</version>-->
+		<!--		</dependency>-->
 
-<!--		 https://mvnrepository.com/artifact/io.oss84.geotools/gt-epsg-hsql -->
+		<!--		 https://mvnrepository.com/artifact/io.oss84.geotools/gt-epsg-hsql -->
+		<!--		<dependency>-->
+		<!--			<groupId>io.oss84.geotools</groupId>-->
+		<!--			<artifactId>gt-epsg-hsql</artifactId>-->
+		<!--			<version>24.2</version>-->
+		<!--			<scope>test</scope>-->
+		<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
 <!--		<dependency>-->
-<!--			<groupId>io.oss84.geotools</groupId>-->
-<!--			<artifactId>gt-epsg-hsql</artifactId>-->
-<!--			<version>24.2</version>-->
-<!--			<scope>test</scope>-->
+<!--			<groupId>org.json</groupId>-->
+<!--			<artifactId>json</artifactId>-->
+<!--			<version>20240303</version>-->
 <!--		</dependency>-->
 
 	</dependencies>
