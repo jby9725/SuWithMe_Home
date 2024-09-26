@@ -10,13 +10,12 @@ import lombok.NoArgsConstructor;
 public class Beach {
 
 	private int id; // 번호
+	private String name; // 해수욕장 이름
+    
+	private int nx; // 기상청 좌표 nx
+	private int ny; // 기상청 좌표 ny
 	
-	private String localGovernment; // 지자체
-    private String managementOffice; // 관리청
-    private String name; // 해수욕장 이름
-    private String address; // 해수욕장 주소
-		
-	private String latitude; // 좌표정보(x)
-	private String longitude; // 좌표정보(y)
+	private String latitude; // 위도
+	private String longitude; // 경도
 
 }

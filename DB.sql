@@ -427,6 +427,22 @@ FROM `event` E
 INNER JOIN `member` M
 ON M.id = E.memberId;
 
+
+## 해수욕장 정보 테이블 생성
+CREATE TABLE beach (
+    id INT PRIMARY KEY,		-- 번호
+    `name` TEXT DEFAULT NULL,			-- 해수욕장명
+    nx INT DEFAULT 0,			-- nx 값
+    ny INT DEFAULT 0,			-- ny 값
+    latitude VARCHAR(20) DEFAULT NULL,		-- 위도
+    longitude VARCHAR(20) DEFAULT NULL	-- 경도
+);
+
+SELECT * FROM beach;
+
+-- 정상 데이터 : 420개
+SELECT COUNT(*) FROM beach;
+
 ###(INIT 끝)
 ##########################################
 

@@ -3,6 +3,8 @@
 <c:set var="pageTitle" value="LOGIN"></c:set>
 <%@ include file="../common/head_NonOption.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <script type="text/javascript">
 	function MemberFindLoginId__submit(form) {
 		form.name.value = form.name.value.trim();

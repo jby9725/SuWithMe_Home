@@ -39,44 +39,68 @@ body {
 	z-index: -1;
 }
 
-.side-panel {
-	position: absolute;
+/* 좌측 패널 호버 트리거 */
+.hover-area-left {
+	position: fixed;
 	top: 0;
-	width: 33.33vw;
+	left: 0;
+	width: 50px; /* 호버 트리거 넓이 */
 	height: 100vh;
-	background-color: lightblue;
-	transition: transform 0.5s ease;
+	z-index: 50;
+	cursor: pointer;
 }
 
-/* 왼쪽은 살짝만 보여줌 */
-.left-panel {
-	left: -30vw;
+/* 좌측 패널 */
+/* .side-panel.left-panel { */
+/* 	transform: translateX(-90%); /* 초기 위치를 화면 밖으로 설정, 90%가 숨겨짐 */ */
+/* 	transition: transform 0.5s ease; /* 패널이 부드럽게 이동하도록 설정 */ */
+/* } */
+
+/* 호버 시 패널이 나타나도록 설정 */
+/* .hover-area-left:hover ~ .side-panel.left-panel, */
+/* .side-panel.left-panel:hover { */
+/* 	transform: translateX(0); /* 호버 시 패널이 완전히 나타남 */ */
+/* } */
+
+/* 좌측 패널 호버 트리거 */
+.hover-area-left {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 20px; /* 호버 트리거 넓이 */
+	height: 100vh;
+	z-index: 50;
+	cursor: pointer;
 }
 
-/* 오른쪽은 살짝만 보여줌 */
-.right-panel {
-	right: -30vw;
+/* 좌측 패널 */
+.side-panel.left-panel {
+	transform: translateX(-95%); /* 초기 위치를 화면 밖으로 설정, 95%가 숨겨짐 */
+	transition: transform 0.5s ease; /* 패널이 부드럽게 이동하도록 설정 */
 }
 
-/* 마우스 호버 시 왼쪽 패널은 오른쪽으로 나타남 */
-.left-panel:hover {
-	transform: translateX(30vw);
+/* 호버 시 패널이 나타나도록 설정 */
+.hover-area-left:hover ~ .side-panel.left-panel,
+.side-panel.left-panel:hover {
+	transform: translateX(0); /* 호버 시 패널이 완전히 나타남 */
 }
 
-/* 마우스 호버 시 오른쪽 패널은 왼쪽으로 나타남 */
-.right-panel:hover {
-	transform: translateX(-30vw);
+/* 1차 메뉴 스타일 */
+.menu-item {
+	cursor: pointer;
 }
 
-.side-panel a {
+/* 2차 메뉴 스타일 */
+.sub-menu {
+	display: none; /* 기본적으로 숨김 */
+	margin-left: 20px; /* 들여쓰기 효과 */
+}
+
+/* 1차 메뉴 클릭 시 2차 메뉴 표시 */
+.menu-item.active + .sub-menu {
 	display: block;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	text-align: center;
-	width: 100%;
-	font-size: 1.5rem;
 }
+
 </style>
 
 <script>
@@ -95,75 +119,94 @@ body {
 	});
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	// 1차 메뉴 클릭 시 2차 메뉴 표시/숨김
+	const menuItems = document.querySelectorAll('.menu-item');
+
+	menuItems.forEach(function (item) {
+		item.addEventListener('click', function () {
+			// 모든 메뉴 아이템의 active 클래스 제거
+			menuItems.forEach(function (menuItem) {
+				menuItem.classList.remove('active');
+				const subMenu = menuItem.nextElementSibling;
+				if (subMenu && subMenu.classList.contains('sub-menu')) {
+					subMenu.style.display = 'none';
+				}
+			});
+			
+			// 클릭한 메뉴 아이템에 active 클래스 추가 및 2차 메뉴 표시
+			item.classList.add('active');
+			const subMenu = item.nextElementSibling;
+			if (subMenu && subMenu.classList.contains('sub-menu')) {
+				subMenu.style.display = 'block';
+			}
+		});
+	});
+});
+</script>
+
 </head>
 
-<body class="relative min-h-screen flex flex-col justify-between">
+<body class="relative min-h-screen flex flex-col justify-between bg-white">
 
 	<div id="background"></div>
 
 	<!-- 상단 우측 로그인/회원가입/마이페이지 -->
 	<header class="w-full flex justify-center py-4">
 		<ul class="flex space-x-4 text-2xl">
-			<!-- 텍스트 크기를 두 배로 키움 -->
 			<c:if test="${!rq.isLogined() }">
-				<li><a class="" href="../member/login">로그인</a></li>
-				<li><a class="" href="../member/join">회원가입</a></li>
+				<li>
+					<a class="hover:text-blue-500" href="../member/login">로그인</a>
+				</li>
+				<li>
+					<a class="hover:text-blue-500" href="../member/join">회원가입</a>
+				</li>
 			</c:if>
 			<c:if test="${rq.isLogined() }">
-				<li><a class="" href="../member/myPage">마이페이지</a></li>
-				<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="" href="../member/doLogout">로그아웃</a></li>
+				<li>
+					<a class="hover:text-blue-500" href="../member/myPage">마이페이지</a>
+				</li>
+				<li>
+					<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:text-blue-500" href="../member/doLogout">로그아웃</a>
+				</li>
 			</c:if>
 		</ul>
-		</div>
 	</header>
 
 	<!-- 중앙 정렬된 로고 및 환영 메시지 -->
-	<div class="flex-grow flex items-center justify-center flex-col">
-		<a href="/"> <img src="/resource/LOGO_black.png" alt="logo" class="h-20 mb-4">
+	<div class="flex-grow flex items-center justify-center flex-col text-center">
+		<a href="/">
+			<img src="/resource/LOGO_black.png" alt="logo" class="h-20 mb-4">
 		</a>
-		<div class="text-2xl">환영합니다.</div>
+		<div class="text-2xl text-gray-800">환영합니다.</div>
 	</div>
 
-	<div>
-		<a href="../pool/main">실내 수영</a>
-	</div>
-	<div>
-		<a href="../beach/main">야외 수영</a>
-	</div>
-	<div>
-		<a href="../article/list?boardId=1">공지사항</a>
-	</div>
-	<div>
-		<a href="../article/list?boardId=2">자유게시판</a>
-	</div>
-	<div>
-		<a href="../article/list?boardId=3">실내 수영 위드미 게시판</a>
-	</div>
-	<div>
-		<a href="../article/list?boardId=4">야외 수영 위드미 게시판</a>
-	</div>
-	<div>
-		<a href="../beach/map">해수욕장</a>
-	</div>
-	<div>
-		<a href="../pool/map">수영장 지도</a>
-	</div>
-	<div>
-		<a href="../swimming/calender">수영 일정 관리</a>
-	</div>
+	<!-- 좌측 실내 수영 패널 -->
+	<!-- 좌측 패널 호버 영역 -->
+	<div class="hover-area-left"></div> <!-- 호버 트리거 영역 -->
+	<div class="side-panel left-panel absolute top-0 left-0 w-1/6 h-screen bg-white flex flex-col items-start space-y-4 py-8 pl-6 shadow-lg border-r border-gray-200">
+		<!-- 1차 메뉴 -->
+		<div class="menu-item text-xl font-semibold text-gray-800 hover:text-blue-500">실내 수영</div>
+		<!-- 2차 메뉴 -->
+		<div class="sub-menu flex flex-col space-y-2">
+		<div><a href="../article/list?boardId=1" class="text-lg font-normal text-gray-700 hover:text-blue-500">공지사항</a></div>
+			<div><a href="../article/list?boardId=2" class="text-lg font-normal text-gray-700 hover:text-blue-500">자유게시판</a></div>
+			<div><a href="../article/list?boardId=3" class="text-lg font-normal text-gray-700 hover:text-blue-500">실내 수영 위드미 게시판</a></div>
+			<div><a href="../pool/map" class="text-lg font-normal text-gray-700 hover:text-blue-500">수영장 지도</a></div>
+			<div><a href="../swimming/calender" class="text-lg font-normal text-gray-700 hover:text-blue-500">수영 일정 관리</a></div>
+		</div>
 
-
-	<!-- 	<!-- 좌측 실내 수영 패널 -->
-	-->
-	<!-- 	<div class="side-panel left-panel"> -->
-	<!-- 		<a href="../pool/main">실내 수영</a> -->
-	<!-- 	</div> -->
-
-	<!-- 	<!-- 우측 야외 수영 패널 -->
-	-->
-	<!-- 	<div class="side-panel right-panel"> -->
-	<!-- 		<a href="../beach/main">야외 수영</a> -->
-	<!-- 	</div> -->
+		<!-- 1차 메뉴 -->
+		<div class="menu-item text-xl font-semibold text-gray-800 hover:text-blue-500">야외 수영</div>
+		<!-- 2차 메뉴 -->
+		<div class="sub-menu flex flex-col space-y-2">
+			<div><a href="../article/list?boardId=1" class="text-lg font-normal text-gray-700 hover:text-blue-500">공지사항</a></div>
+			<div><a href="../article/list?boardId=2" class="text-lg font-normal text-gray-700 hover:text-blue-500">자유게시판</a></div>
+			<div><a href="../article/list?boardId=4" class="text-lg font-normal text-gray-700 hover:text-blue-500">야외 수영 위드미 게시판</a></div>
+			<div><a href="../beach/map" class="text-lg font-normal text-gray-700 hover:text-blue-500">해수욕장</a></div>
+		</div>
+	</div>
 
 </body>
 

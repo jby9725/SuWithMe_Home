@@ -4,6 +4,8 @@
 <c:set var="pageTitle" value="POOL MAP"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <!-- 네이버 지도 API -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ecu9lnpu4v"></script>
 
@@ -37,11 +39,11 @@
 
 <!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
 <section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
-	<div id="map" class="" style="width: 100%; height: 100%;"></div>
+	<div id="map" class="" style="width: 100%; height: 75vh;"></div>
 </section>
 
 <script>
-    var IMG_PATH = '/resource/32-icon.png'; // 마커 아이콘 경로
+    var IMG_PATH = '/resource/32-pool-icon.png'; // 마커 아이콘 경로
     var defaultImageUrl = "https://via.placeholder.com/100";  // 기본 이미지 URL
 
     // 네이버 지도 생성

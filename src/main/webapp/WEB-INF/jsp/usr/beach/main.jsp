@@ -2,6 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="BEACH MAIN"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
+
+<%@ include file="../common/sidebar.jspf"%>
+
 <!-- 여기서부터 내용 -->
 
 <!-- 배경 -->

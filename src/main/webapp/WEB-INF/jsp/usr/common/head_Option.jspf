@@ -30,12 +30,12 @@
 			<ul class="flex">
 
 				<c:if test="${!rq.isLogined() }">
-					<li><a class="hover:underline" href="../member/login">로그인</a></li>
-					<li><a class="hover:underline" href="../member/join">회원가입</a></li>
+					<li><a class="hover:text-blue-500" href="../member/login">로그인</a></li>
+					<li><a class="hover:text-blue-500" href="../member/join">회원가입</a></li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
-					<li><a class="hover:underline" href="../member/myPage">마이페이지</a></li>
-					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
+					<li><a class="hover:text-blue-500" href="../member/myPage">마이페이지</a></li>
+					<li><a class="hover:text-blue-500" onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
 						href="../member/doLogout">로그아웃</a></li>
 				</c:if>
 			</ul>

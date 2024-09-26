@@ -1,0 +1,118 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<style>
+
+/* 좌측 패널 호버 트리거 */ 
+.hover-area-left {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 20px; /* 호버 트리거 넓이 */
+	height: 200vh;
+	z-index: 50;
+	cursor: pointer;
+}
+
+/* 좌측 패널 */
+.side-panel.left-panel {
+	position: fixed;
+	transform: translateX(-95%); /* 초기 위치를 화면 밖으로 설정, 95%가 숨겨짐 */
+	transition: transform 0.5s ease; /* 패널이 부드럽게 이동하도록 설정 */
+	z-index: 999;
+}
+
+/* 호버 시 패널이 나타나도록 설정 */
+.hover-area-left:hover ~ .side-panel.left-panel, .side-panel.left-panel:hover
+	{
+	transform: translateX(0); /* 호버 시 패널이 완전히 나타남 */
+}
+
+/* 1차 메뉴 스타일 */
+.menu-item {
+	cursor: pointer;
+}
+
+/* 2차 메뉴 스타일 */
+.sub-menu {
+	display: none; /* 기본적으로 숨김 */
+	margin-left: 20px; /* 들여쓰기 효과 */
+}
+
+/* 1차 메뉴 클릭 시 2차 메뉴 표시 */
+.menu-item.active+.sub-menu {
+	display: block;
+}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// 1차 메뉴 클릭 시 2차 메뉴 표시/숨김
+		const menuItems = document.querySelectorAll('.menu-item');
+
+		menuItems.forEach(function(item) {
+			item.addEventListener('click', function() {
+				// 모든 메뉴 아이템의 active 클래스 제거
+				menuItems.forEach(function(menuItem) {
+					menuItem.classList.remove('active');
+					const subMenu = menuItem.nextElementSibling;
+					if (subMenu && subMenu.classList.contains('sub-menu')) {
+						subMenu.style.display = 'none';
+					}
+				});
+
+				// 클릭한 메뉴 아이템에 active 클래스 추가 및 2차 메뉴 표시
+				item.classList.add('active');
+				const subMenu = item.nextElementSibling;
+				if (subMenu && subMenu.classList.contains('sub-menu')) {
+					subMenu.style.display = 'block';
+				}
+			});
+		});
+	});
+</script>
+
+<!-- 좌측 실내 수영 패널 -->
+<!-- 좌측 패널 호버 영역 -->
+<div class="hover-area-left"></div>
+<!-- 호버 트리거 영역 -->
+<div
+	class="side-panel left-panel absolute top-0 left-0 w-1/6 h-screen bg-white flex flex-col items-start space-y-4 py-8 pl-6 shadow-lg border-r border-gray-200">
+	<!-- 1차 메뉴 -->
+	<div class="menu-item text-xl font-semibold text-gray-800 hover:text-blue-500">실내 수영</div>
+	<!-- 2차 메뉴 -->
+	<div class="sub-menu flex flex-col space-y-2">
+		<div>
+			<a href="../article/list?boardId=1" class="text-lg font-normal text-gray-700 hover:text-blue-500">공지사항</a>
+		</div>
+		<div>
+			<a href="../article/list?boardId=2" class="text-lg font-normal text-gray-700 hover:text-blue-500">자유게시판</a>
+		</div>
+		<div>
+			<a href="../article/list?boardId=3" class="text-lg font-normal text-gray-700 hover:text-blue-500">실내 수영 위드미 게시판</a>
+		</div>
+		<div>
+			<a href="../pool/map" class="text-lg font-normal text-gray-700 hover:text-blue-500">수영장 지도</a>
+		</div>
+		<div>
+			<a href="../swimming/calender" class="text-lg font-normal text-gray-700 hover:text-blue-500">수영 일정 관리</a>
+		</div>
+	</div>
+
+	<!-- 1차 메뉴 -->
+	<div class="menu-item text-xl font-semibold text-gray-800 hover:text-blue-500">야외 수영</div>
+	<!-- 2차 메뉴 -->
+	<div class="sub-menu flex flex-col space-y-2">
+		<div>
+			<a href="../article/list?boardId=1" class="text-lg font-normal text-gray-700 hover:text-blue-500">공지사항</a>
+		</div>
+		<div>
+			<a href="../article/list?boardId=2" class="text-lg font-normal text-gray-700 hover:text-blue-500">자유게시판</a>
+		</div>
+		<div>
+			<a href="../article/list?boardId=4" class="text-lg font-normal text-gray-700 hover:text-blue-500">야외 수영 위드미 게시판</a>
+		</div>
+		<div>
+			<a href="../beach/map" class="text-lg font-normal text-gray-700 hover:text-blue-500">해수욕장</a>
+		</div>
+	</div>
+</div>

@@ -5,6 +5,8 @@
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <!-- 여기서부터 내용 -->
 
 <!-- 배경 -->
@@ -35,8 +37,8 @@
 /* 오수완 이미지 스타일 */
 .osuwan-img {
 	position: absolute;
-	width: 60px; /* 이미지 크기 설정 */
-	height: 60px; /* 이미지 크기 설정 */
+	width: 100px; /* 이미지 크기 설정 */
+	height: 100px; /* 이미지 크기 설정 */
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -225,35 +227,38 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
-<section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
+<section class="con flex-grow flex justify-center items-center m-16 bg-white rounded-lg">
 
-
-	<!-- 오수완 왕 섹션 -->
-	<section class="top-completed-user">
-		<div style="text-align: center; font-size: 1.5em; margin: 20px 0;">
-			<strong>오수완 왕:</strong>
-			<c:choose>
-				<c:when test="${topMember != null}">
+	<div>
+		<!-- 오수완 왕 섹션 -->
+		<section class="top-completed-user">
+			<div style="text-align: center; font-size: 1.5em; margin: 20px 0;">
+				<strong>오수완 왕:</strong>
+				<c:choose>
+					<c:when test="${topMember != null}">
                 ${topMember.nickname} (완료 횟수: ${topMember.completedCount})
             </c:when>
-				<c:otherwise>
+					<c:otherwise>
                 오수완 왕이 아직 없습니다.
             </c:otherwise>
-			</c:choose>
-		</div>
-	</section>
+				</c:choose>
+			</div>
+		</section>
 
-	<!-- 나의 오수완 완료 횟수 출력 -->
-	<div style="text-align: center; font-size: 1.5em; margin: 20px 0;">
-		<strong>나의 오수완 완료 횟수:</strong> ${completedEventCount}회
+		<!-- 나의 오수완 완료 횟수 출력 -->
+		<div style="text-align: center; font-size: 1.5rem; margin: 20px 0;">
+			<strong>나의 오수완 완료 횟수:</strong>
+			${completedEventCount}회
+		</div>
 	</div>
 
-	<!-- 일정 추가 버튼 -->
-	<button id="addEventButton">일정 추가</button>
+	<div>
+		<!-- 일정 추가 버튼 -->
+		<button id="addEventButton">일정 추가</button>
 
-	<!-- FullCalendar가 표시될 div -->
-	<div id="calendar" style="max-width: 900px; margin: 40px auto;"></div>
-
+		<!-- FullCalendar가 표시될 div -->
+		<div id="calendar" style="width: 900px; margin: 40px auto;"></div>
+	</div>
 </section>
 
 <!-- 모달 배경 -->
@@ -262,13 +267,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 일정 추가 폼(모달) -->
 <div id="addEventModal">
 	<form id="addEventForm">
-		<label for="eventTitle">일정 제목</label> <input type="text" id="eventTitle" name="eventTitle" required> <label
-			for="eventDescription">일정 설명</label>
+		<label for="eventTitle">일정 제목</label>
+		<input type="text" id="eventTitle" name="eventTitle" required>
+		<label for="eventDescription">일정 설명</label>
 		<textarea id="eventDescription" name="eventDescription"></textarea>
 
-		<label for="eventStartDate">시작 날짜</label> <input type="date" id="eventStartDate" name="eventStartDate" required>
+		<label for="eventStartDate">시작 날짜</label>
+		<input type="date" id="eventStartDate" name="eventStartDate" required>
 
-		<label for="eventEndDate">종료 날짜</label> <input type="date" id="eventEndDate" name="eventEndDate" required>
+		<label for="eventEndDate">종료 날짜</label>
+		<input type="date" id="eventEndDate" name="eventEndDate" required>
 
 		<button type="submit">일정 추가</button>
 	</form>

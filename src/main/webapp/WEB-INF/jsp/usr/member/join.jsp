@@ -3,6 +3,8 @@
 <c:set var="pageTitle" value="JOIN"></c:set>
 <%@ include file="../common/head_NonOption.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <!-- lodash debounce -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 <script>

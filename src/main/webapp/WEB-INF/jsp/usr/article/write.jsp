@@ -4,6 +4,8 @@
 <%@ include file="../common/head_Option.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <script type="text/javascript">
 	function ArticleWrite__submit(form) {
 		form.title.value = form.title.value.trim();

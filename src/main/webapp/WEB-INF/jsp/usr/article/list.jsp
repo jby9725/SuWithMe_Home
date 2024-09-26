@@ -3,6 +3,8 @@
 <c:set var="pageTitle" value="${board.code } LIST"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <!-- 배경 -->
 <div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 

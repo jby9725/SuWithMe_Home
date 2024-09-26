@@ -4,6 +4,7 @@
 <%@ include file="../common/head_Option.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
 
 <!-- <iframe src="http://localhost:8080/usr/article/doIncreaseHitCount?id=757" frameborder="0"></iframe> -->
 <!-- 변수 -->
