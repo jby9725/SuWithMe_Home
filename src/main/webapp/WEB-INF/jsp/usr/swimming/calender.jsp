@@ -14,9 +14,13 @@
 
 <!-- 스타일 설정 -->
 <style>
+body {
+	overflow: hidden;
+}
+
 #calendar {
 	width: 100%;
-	height: 75vh; /* 화면 높이의 75%로 조정 */
+	height: 60vh; /* 화면 높이의 75%로 조정 */
 	max-width: 900px;
 	margin: 20px auto;
 }
@@ -49,7 +53,7 @@
 /* 일정 추가 버튼 스타일 */
 #addEventButton {
 	display: block;
-	margin: 20px auto;
+	margin: 20px;
 	padding: 10px 20px;
 	background-color: #4CAF50; /* 버튼 배경색 */
 	color: white; /* 버튼 글자색 */
@@ -227,11 +231,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
-<section class="con flex-grow flex justify-center items-center m-16 bg-white rounded-lg">
+<section class="con flex-grow flex-col justify-center items-center m-8 bg-white rounded-lg">
 
-	<div>
-		<!-- 오수완 왕 섹션 -->
-		<section class="top-completed-user">
+	<div class="flex justify-between">
+
+		<div class="m-4">
+			<!-- 오수완 왕 -->
 			<div style="text-align: center; font-size: 1.5em; margin: 20px 0;">
 				<strong>오수완 왕:</strong>
 				<c:choose>
@@ -243,19 +248,21 @@ document.addEventListener('DOMContentLoaded', function() {
             </c:otherwise>
 				</c:choose>
 			</div>
-		</section>
 
-		<!-- 나의 오수완 완료 횟수 출력 -->
-		<div style="text-align: center; font-size: 1.5rem; margin: 20px 0;">
-			<strong>나의 오수완 완료 횟수:</strong>
-			${completedEventCount}회
+			<!-- 나의 오수완 완료 횟수 출력 -->
+			<div style="text-align: center; font-size: 1.5rem; margin: 20px 0;">
+				<strong>나의 오수완 완료 횟수:</strong> ${completedEventCount}회
+			</div>
+
 		</div>
+
+		<div class="flex-grow"></div>
+
+		<!-- 일정 추가 버튼 -->
+		<button id="addEventButton">일정 추가</button>
 	</div>
 
 	<div>
-		<!-- 일정 추가 버튼 -->
-		<button id="addEventButton">일정 추가</button>
-
 		<!-- FullCalendar가 표시될 div -->
 		<div id="calendar" style="width: 900px; margin: 40px auto;"></div>
 	</div>
@@ -267,16 +274,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 일정 추가 폼(모달) -->
 <div id="addEventModal">
 	<form id="addEventForm">
-		<label for="eventTitle">일정 제목</label>
-		<input type="text" id="eventTitle" name="eventTitle" required>
-		<label for="eventDescription">일정 설명</label>
+		<label for="eventTitle">일정 제목</label> <input type="text" id="eventTitle" name="eventTitle" required> <label
+			for="eventDescription">일정 설명</label>
 		<textarea id="eventDescription" name="eventDescription"></textarea>
 
-		<label for="eventStartDate">시작 날짜</label>
-		<input type="date" id="eventStartDate" name="eventStartDate" required>
+		<label for="eventStartDate">시작 날짜</label> <input type="date" id="eventStartDate" name="eventStartDate" required>
 
-		<label for="eventEndDate">종료 날짜</label>
-		<input type="date" id="eventEndDate" name="eventEndDate" required>
+		<label for="eventEndDate">종료 날짜</label> <input type="date" id="eventEndDate" name="eventEndDate" required>
 
 		<button type="submit">일정 추가</button>
 	</form>
