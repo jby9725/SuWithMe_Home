@@ -208,6 +208,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // 끝 날에 하루 더하기
+		var endDateObj = new Date(endDate);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        endDate = endDateObj.toISOString().split('T')[0];
+
+        
         // 서버로 일정 추가 요청
         $.ajax({
             url: '/usr/swimming/calender/addEvent',
