@@ -73,8 +73,9 @@ public class UsrCalenderController {
 
 		int userId = rq.getLoginedMemberId();
 
-		ResultData addEventRd = calenderService.addEvent(title, body, startDate, endDate, userId);
-
+		// ResultData addEventRd = calenderService.addEvent(title, body, startDate, endDate, userId);
+		ResultData addEventRd = calenderService.addMultipleEvents(title, body, startDate, endDate, userId);
+		
 		return Ut.jsReplace(addEventRd.getResultCode(), addEventRd.getMsg(), "/usr/swimming/calender");
 	}
 

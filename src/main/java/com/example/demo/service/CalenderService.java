@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +52,27 @@ public class CalenderService {
 		return ResultData.from("S-1", "일정이 '오수완'으로 표시되었습니다.");
 	}
 
+	public ResultData addMultipleEvents(String title, String body, String startDate, String endDate, int memberId) {
+        // startDate와 endDate를 LocalDate로 변환
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        // startDate부터 endDate까지 모든 날짜에 대해 이벤트 추가
+        while (!start.isAfter(end)) {
+            String currentDay = start.toString(); // 현재 날짜를 String 형식으로 변환
+            
+         // endDate를 다음 날 00:00으로 설정
+            LocalDateTime endOfDay = start.plusDays(1).atStartOfDay(); // 다음 날 00:00
+            String endDateTime = endOfDay.toString().replace("T", " "); // "yyyy-MM-dd HH:mm:ss" 형식으로 변환
+            
+            calenderRepository.addEvent(title, body, currentDay, endDateTime, memberId); // 하루 일정 추가
+            
+            start = start.plusDays(1); // 다음 날로 이동
+        }
+
+        return ResultData.from("S-1", Ut.f("일정이 %d일 동안 추가되었습니다.", ChronoUnit.DAYS.between(LocalDate.parse(startDate), LocalDate.parse(endDate)) + 1));
+    }
+	
 	public Event getEventById(int id) {
         return calenderRepository.getEventById(id);
     }

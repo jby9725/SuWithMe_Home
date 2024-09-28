@@ -401,16 +401,6 @@ CREATE TABLE `event` (
     completed BOOLEAN DEFAULT FALSE,    -- 일정 완료 여부 (오수완 체크용)
     memberId INT                          -- 일정 작성자의 사용자 ID (FK)
 );
-
--- 캘린더 테스트 데이터 생성
-INSERT INTO `event`
-SET title = CONCAT('일정 제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
-    `body` = CONCAT('일정 내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
-    createDate = NOW(),
-    updateDate = NOW(),
-    startDate = NOW(),
-    endDate = NOW(),
-    memberId = 2;
     
 SELECT * FROM `event`;
 

@@ -207,12 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('필수 항목을 모두 입력해주세요.');
             return;
         }
-
-        // 끝 날에 하루 더하기
-		var endDateObj = new Date(endDate);
-        endDateObj.setDate(endDateObj.getDate() + 1);
-        endDate = endDateObj.toISOString().split('T')[0];
-
         
         // 서버로 일정 추가 요청
         $.ajax({
@@ -247,11 +241,11 @@ document.addEventListener('DOMContentLoaded', function() {
 				<strong>오수완 왕:</strong>
 				<c:choose>
 					<c:when test="${topMember != null}">
-                ${topMember.nickname} (완료 횟수: ${topMember.completedCount})
-            </c:when>
+                		${topMember.nickname} (완료 횟수: ${topMember.completedCount})
+            		</c:when>
 					<c:otherwise>
-                오수완 왕이 아직 없습니다.
-            </c:otherwise>
+                		오수완 왕이 아직 없습니다.
+            		</c:otherwise>
 				</c:choose>
 			</div>
 
