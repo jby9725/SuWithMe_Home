@@ -27,4 +27,8 @@ public class BeachService {
 		return beachRepository.getAllBeaches();
 	}
 
+	public Beach getBeachByName(String name) {
+	    return beachRepository.findByName(name);
+	}
+
 }

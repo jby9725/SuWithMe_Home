@@ -85,4 +85,11 @@ public interface PoolRepository {
 			""")
 	public void setLatLon(int id, double lat, double lon);
 
+//	@Select("""
+//			SELECT *
+//			FROM pool
+//			WHERE `name` = #{name}
+//			""")
+//	public Pool findByName(String name);
+
 }

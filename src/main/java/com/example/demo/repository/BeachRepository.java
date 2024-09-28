@@ -34,4 +34,11 @@ public interface BeachRepository {
 			""")
 	public void doInsertInfo(int id, String name, int nx, int ny, String latitude, String longitude);
 
+	@Select("""
+			    SELECT *
+			    FROM beach
+			    WHERE `name` = #{name}
+			""")
+	public Beach findByName(String name);
+
 }

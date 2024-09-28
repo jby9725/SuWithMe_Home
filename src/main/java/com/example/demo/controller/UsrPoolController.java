@@ -8,9 +8,12 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.PoolService;
@@ -38,6 +41,16 @@ public class UsrPoolController {
 		
 		return "/usr/pool/map";
 	}
+	
+//	@RequestMapping("/usr/pool/search")
+//	public ResponseEntity<Pool> searchPoolByName(@RequestParam String name) {
+//        Pool pool = poolService.findByName(name);
+//        if (pool != null) {
+//            return ResponseEntity.ok(pool);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//    }
 
 	// 일회성 코드(DB에 있는 중부원점 좌표를 위도/경도로 Update 하기)
 	@RequestMapping("/usr/pool/doLatlonUpdate")

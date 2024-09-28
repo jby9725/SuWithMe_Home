@@ -37,8 +37,15 @@
 	</div>
 </div>
 
+<!-- 검색 바 -->
+<div class="search-bar flex justify-center mt-4">
+	<input id="searchInput" type="text" placeholder="수영장 이름을 입력하세요" class="border p-2 rounded w-1/2">
+	<button onclick="searchPool()" class="bg-blue-500 text-white p-2 ml-2 rounded">검색</button>
+</div>
+
 <!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
 <section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
+
 	<div id="map" class="" style="width: 100%; height: 75vh;"></div>
 </section>
 
@@ -52,7 +59,7 @@
         zoom: 12
     });
 
-    // 풀 목록의 위도/경도 데이터를 JSP에서 JavaScript로 전달
+    // 수영장 목록의 위도/경도 데이터를 JSP에서 JavaScript로 전달
     var pools = [];
     <c:forEach var="pool" items="${pools}">
     pools.push({
@@ -153,6 +160,28 @@
             searchImagesAndBlogs(pool);
         });
     });
+    
+	// 수영장 이름으로 검색 후 지도 이동 및 마커 표시
+    function searchPool() {
+        var searchInput = document.getElementById("searchInput").value.trim();
+        if (searchInput === "") {
+            alert("검색어를 입력하세요.");
+            return;
+        }
+
+        var pool = pools.find(function(p) {
+            return p.name === searchInput;
+        });
+
+        if (pool) {
+            var newCenter = new naver.maps.LatLng(pool.latitude, pool.longitude);
+            map.setCenter(newCenter); // 지도 중심 이동
+            map.setZoom(15); // 줌 레벨 조정
+            searchImagesAndBlogs(pool); // 해당 수영장 정보 모달 표시
+        } else {
+            alert("해당 이름의 수영장을 찾을 수 없습니다.");
+        }
+    }
 </script>
 
 <%@ include file="../common/foot.jspf"%>

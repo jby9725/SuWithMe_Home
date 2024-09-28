@@ -2,21 +2,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="BEACH MAP"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
-
 <%@ include file="../common/sidebar.jspf"%>
 
 <!-- 네이버 지도 API -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ecu9lnpu4v"></script>
 <script>
     var IMG_PATH = '/resource/32-beach-icon.png'; // 마커 아이콘 경로
-</script>
+    var map; // 전역 변수로 map 선언
 
-<!-- 지도 초기화 및 마커 설정 -->
-<script>
+    // 지도 초기화 및 마커 설정
     document.addEventListener('DOMContentLoaded', function() { // 페이지 로드 후에 초기화
         console.log("DOMContentLoaded 이벤트가 실행되었습니다.");
 
-        var map = new naver.maps.Map('map', {
+        map = new naver.maps.Map('map', { // map을 전역 변수로 할당
             center: new naver.maps.LatLng(36.3504396, 127.3849508), // 대전 시청 좌표
             zoom: 8
         });
@@ -75,7 +73,7 @@
         });
     });
 
- // 날씨 데이터 요청 및 모달 창 표시 함수
+    // 날씨 데이터 요청 및 모달 창 표시 함수
     function getWeatherData(nx, ny, beachName) {
         console.log("getWeatherData nx : ", nx);
         console.log("getWeatherData ny : ", ny);
@@ -147,10 +145,54 @@
             console.error("weatherPopup 요소를 찾을 수 없습니다. HTML의 ID를 확인하세요.");
         }
     }
+
+    // 검색 버튼 클릭 시 호출되는 함수
+    function searchBeach() {
+        const searchInput = document.getElementById('searchInput').value.trim();
+        
+        if (!searchInput) {
+            alert("해수욕장 이름을 입력하세요.");
+            return;
+        }
+
+        // 해수욕장 검색
+        const searchUrl = `/usr/beach/search?name=\${encodeURIComponent(searchInput)}`;
+        console.log("검색 요청 URL:", searchUrl);
+
+        fetch(searchUrl)
+            .then(response => response.json())
+            .then(beach => {
+                if (!beach || !beach.latitude || !beach.longitude) {
+                    alert("해수욕장을 찾을 수 없습니다.");
+                    return;
+                }
+
+                // 검색된 해수욕장 정보 확인
+                console.log("검색된 해수욕장 데이터:", beach);
+
+                // 지도의 중심을 검색된 해수욕장 위치로 이동
+                const newCenter = new naver.maps.LatLng(beach.latitude, beach.longitude);
+                map.setCenter(newCenter); // 전역에서 정의된 map 변수를 사용
+                map.setZoom(12); // 적절한 줌 레벨로 변경
+
+                // 날씨 정보를 출력
+                getWeatherData(beach.nx, beach.ny, beach.name);
+            })
+            .catch(error => {
+                console.error("해수욕장 검색 중 오류 발생:", error);
+                alert("해수욕장 정보를 가져오는 데 실패했습니다.");
+            });
+    }
 </script>
 
 <!-- 배경 -->
 <div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
+
+<!-- 검색 바 -->
+<div class="search-bar flex justify-center mt-4">
+    <input id="searchInput" type="text" placeholder="해수욕장 이름을 입력하세요" class="border p-2 rounded w-1/2">
+    <button onclick="searchBeach()" class="bg-blue-500 text-white p-2 ml-2 rounded">검색</button>
+</div>
 
 <!-- 중앙 정렬된 하얀색 박스 (화면의 절반 크기) -->
 <section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
@@ -158,7 +200,8 @@
 </section>
 
 <!-- 모달 창 -->
-<div id="weatherPopup" style="display: none; background: white; border: 1px solid black; padding: 10px; position: absolute; z-index: 100; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="fixed bg-white border border-black p-4 rounded-lg shadow-lg w-96 max-w-full">
-</div>
+<div id="weatherPopup"
+    style="display: none; background: white; border: 1px solid black; padding: 10px; position: absolute; z-index: 100; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+    class="fixed bg-white border border-black p-4 rounded-lg shadow-lg w-96 max-w-full"></div>
 
 <%@ include file="../common/foot.jspf"%>

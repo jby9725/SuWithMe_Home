@@ -18,6 +18,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,93 +58,102 @@ public class UsrBeachController {
 		return "/usr/beach/map";
 	}
 
+	@RequestMapping("/usr/beach/search")
+	@ResponseBody
+	public ResponseEntity<Beach> searchBeachByName(@RequestParam("name") String name) {
+		Beach beach = beachService.getBeachByName(name);
+		if (beach != null) {
+			return ResponseEntity.ok(beach);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
 	@RequestMapping("/usr/beach/weather")
 	@ResponseBody
-	public ResponseEntity<Map<String, Weather>> getWeatherData(
-	        @RequestParam("nx") String nx,
-	        @RequestParam("ny") String ny,
-	        @RequestParam("numOfRows") int numOfRows) {
+	public ResponseEntity<Map<String, Weather>> getWeatherData(@RequestParam("nx") String nx,
+			@RequestParam("ny") String ny, @RequestParam("numOfRows") int numOfRows) {
 
-	    Map<String, Weather> weatherDataMap = new HashMap<>();
+		Map<String, Weather> weatherDataMap = new HashMap<>();
 
-	    try {
-	        // API 요청 URL 설정
-	        String baseDate = getCurrentBaseDate(); // 기준 날짜 (오늘 날짜)
-	        String baseTime = "0800"; // 기준 시간 (고정 시간: 08:00)
-	        String apiURL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-	        StringBuilder urlBuilder = new StringBuilder(apiURL);
-	        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
-	        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=1");
-	        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + numOfRows);
-	        urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=JSON");
-	        urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "=" + baseDate);
-	        urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "=" + baseTime);
-	        urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + nx);
-	        urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + ny);
+		try {
+			// API 요청 URL 설정
+			String baseDate = getCurrentBaseDate(); // 기준 날짜 (오늘 날짜)
+			String baseTime = "0800"; // 기준 시간 (고정 시간: 08:00)
+			String apiURL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+			StringBuilder urlBuilder = new StringBuilder(apiURL);
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
+			urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=1");
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + numOfRows);
+			urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=JSON");
+			urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "=" + baseDate);
+			urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "=" + baseTime);
+			urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + nx);
+			urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + ny);
 
-	        URL url = new URL(urlBuilder.toString());
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("GET");
+			URL url = new URL(urlBuilder.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
 
-	        BufferedReader rd;
-	        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        } else {
-	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-	        }
-	        StringBuilder result = new StringBuilder();
-	        String line;
-	        while ((line = rd.readLine()) != null) {
-	            result.append(line);
-	        }
-	        rd.close();
-	        conn.disconnect();
+			BufferedReader rd;
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			StringBuilder result = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+			}
+			rd.close();
+			conn.disconnect();
 
-	        JSONObject jsonResponse = new JSONObject(result.toString());
-	        JSONObject responseObject = jsonResponse.getJSONObject("response");
-	        JSONObject header = responseObject.getJSONObject("header");
-	        String resultCode = header.getString("resultCode");
+			JSONObject jsonResponse = new JSONObject(result.toString());
+			JSONObject responseObject = jsonResponse.getJSONObject("response");
+			JSONObject header = responseObject.getJSONObject("header");
+			String resultCode = header.getString("resultCode");
 
-	        if (!"00".equals(resultCode)) {
-	            return ResponseEntity.ok(weatherDataMap);
-	        }
+			if (!"00".equals(resultCode)) {
+				return ResponseEntity.ok(weatherDataMap);
+			}
 
-	        JSONObject body = responseObject.getJSONObject("body");
-	        JSONArray items = body.getJSONObject("items").getJSONArray("item");
+			JSONObject body = responseObject.getJSONObject("body");
+			JSONArray items = body.getJSONObject("items").getJSONArray("item");
 
-	        // 각 기준 시간별로 데이터를 통합해서 저장
-	        for (int i = 0; i < items.length(); i++) {
-	            JSONObject item = items.getJSONObject(i);
-	            String baseTime1 = item.getString("fcstTime");
-	            String category = item.getString("category");
-	            String value = item.getString("fcstValue");
+			// 각 기준 시간별로 데이터를 통합해서 저장
+			for (int i = 0; i < items.length(); i++) {
+				JSONObject item = items.getJSONObject(i);
+				String baseTime1 = item.getString("fcstTime");
+				String category = item.getString("category");
+				String value = item.getString("fcstValue");
 
-	            Weather weather;
-	            if (weatherDataMap.containsKey(baseTime1)) {
-	                weather = weatherDataMap.get(baseTime1);
-	            } else {
-	                weather = new Weather();
-	                weather.setBaseTime(baseTime1);
-	                weatherDataMap.put(baseTime1, weather);
-	            }
+				Weather weather;
+				if (weatherDataMap.containsKey(baseTime1)) {
+					weather = weatherDataMap.get(baseTime1);
+				} else {
+					weather = new Weather();
+					weather.setBaseTime(baseTime1);
+					weatherDataMap.put(baseTime1, weather);
+				}
 
-	            switch (category) {
-	                case "TMP":
-	                    weather.setTemperature(value + "℃");
-	                    break;
-	                case "PTY":
-	                    weather.setPrecipitationType(getRainType(value));
-	                    break;
-	                case "POP":
-	                    weather.setPrecipitationProbability(value + "%");
-	                    break;
-	            }
-	        }
+				switch (category) {
+				case "TMP":
+					weather.setTemperature(value + "℃");
+					break;
+				case "PTY":
+					weather.setPrecipitationType(getRainType(value));
+					break;
+				case "POP":
+					weather.setPrecipitationProbability(value + "%");
+					break;
+				}
+			}
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return ResponseEntity.ok(weatherDataMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok(weatherDataMap);
 	}
 
 	// 필요한 날씨 정보를 추출하는 함수

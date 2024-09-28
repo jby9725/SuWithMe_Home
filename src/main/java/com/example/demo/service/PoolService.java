@@ -54,5 +54,9 @@ public class PoolService {
 		System.err.println(i+"번째 행 Update...");
 	}
 
+//	public Pool findByName(String name) {
+//		return poolRepository.findByName(name);
+//	}
+
 
 }
